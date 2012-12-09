@@ -1,0 +1,40 @@
+/*Style Page*/
+
+body {
+	clear: all;
+}
+
+h1 {
+	font-size: 22pt;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-weight: normal;
+	font-color: #fff;
+}
+
+h2 {
+	font-size: 18pt;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-weight: normal;
+	font-color: #fff;
+}
+
+h3 {
+	font-size: 16pt;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-weight: normal;
+	font-color: #fff;
+}
+
+h4 {
+	font-size: 13pt;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-weight: normal;
+	font-color: #fff;
+}
+
+p {
+	font-size: 10pt;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-weight: normal;
+	font-color: #fff;
+}
