@@ -9,7 +9,7 @@ p1_exp = 0
 play = True
 
 while play == True:
-# create floating score variable
+# create floating score variable - later will add score to this variable each consecutive play until player chooses to Save which adds this value to the p1_exp value.
     floating_score = 0
 # base_gen randomly generates the base value for exp calculation. simulates a d20 throw
     base_gen = random.randint(1, 20)
