@@ -6,15 +6,15 @@ menu_choice = 0
 def show_menu():
     # display main menu
     print("""
-        Please type 1 to begin new list.
-        Type 2 to see current list.
-        Type 3 to close app.""")
+Please type 1 to begin new list.
+Type 2 to see current list.
+Type 3 to close app.""")
 
 def list_instructions():
     # print out instructions on how to use the app
     print("""
-        Enter an item and press [Ent] to save it.
-        Press [Ent] 2x to save list.""")
+Enter an item and press [Ent] to save it.
+Press [Ent] 2x to save list.""")
 
 def show_list():
     # print out the list
@@ -32,7 +32,13 @@ def add_to_list(new_item):
 # encompasses the shopping list & displays it.
 while menu_choice == 0:
     show_menu()
-    menu_choice = int(input("Your choice: "))
+    try:
+        menu_choice = input("Your choice: ")
+    except NameError:
+        print("That's not a number!")
+            
+    else:
+        continue
 # this is the inner while loop which asks users for
 # input for shopping list & adds each entry to list
     while menu_choice != 0:
@@ -45,8 +51,9 @@ while menu_choice == 0:
             continue
         elif menu_choice == 1:
             new_item = input(str(len(shopping_list)+ 1) + ". ")
-            if new_item == '':
+            if new_item == "":
                 menu_choice = 0
                 break
-            add_to_list(new_item)
+            else:
+                add_to_list(new_item)
             continue
