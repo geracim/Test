@@ -1,59 +1,67 @@
-# make a list to hold onto items
+import os
+
 shopping_list = []
-menu_choice = 0
 
-# insert the block of functions below.
-def show_menu():
-    # display main menu
-    print("""
-Please type 1 to begin new list.
-Type 2 to see current list.
-Type 3 to close app.""")
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
 
-def list_instructions():
-    # print out instructions on how to use the app
+def show_help():
+    clear_screen()
+    print("What should we pick up at the store?")
     print("""
-Enter an item and press [Ent] to save it.
-Press [Ent] 2x to save list.""")
+Enter 'done' to stop adding items.
+Enter 'help' for this help.
+Enter 'show' to see your current list.
+Enter 'remove' to remove an item from your list.
+""")
+
+def add_to_list(item):
+    show_list()
+    if len(shopping_list):
+        position = input("where should I add {}?\n"
+            "Press Enter to add to the end of the list\n"
+            "> ".format(item))
+    else:
+        position = 0
+    try:
+        position = abs(int(position))
+    except ValueError:
+        position = None
+    if position is not None:
+        shopping_list.insert(position - 1, item)
+    else:
+        shopping_list.append(new_item)
+
+    print("Added! List has {} items.".format(len(shopping_list)))
+
 
 def show_list():
-    # print out the list
-    print("Here's your list: ")
+    clear_screen()
+
+    print("Here's your list:")
+
+    index = 1
     for item in shopping_list:
-        print(item)
+        print("{}. {}".format(index, item))
+        index += 1
 
-def add_to_list(new_item):
-    # add new items to our list
-    shopping_list.append(new_item)
-    # print("Added {}. There are now {} things in list.".format(new_item, len(shopping_list)))
+    print('~' * 10)
 
-# Warning, there be while loops beyond this point.
-# this is the first, and outer while loop which
-# encompasses the shopping list & displays it.
-while menu_choice == 0:
-    show_menu()
-    try:
-        menu_choice = input("Your choice: ")
-    except NameError:
-        print("That's not a number!")
-            
-    else:
+
+show_help()
+
+while True:
+    new_item = input("> ")
+
+    if new_item.upper() == 'DONE' or new_item.upper() == "QUIT":
+        break
+    elif new_item.upper() == 'HELP':
+        show_help()
         continue
-# this is the inner while loop which asks users for
-# input for shopping list & adds each entry to list
-    while menu_choice != 0:
-        if menu_choice == 3:
-            menu_choice = 0
-            continue
-        elif menu_choice == 2:
-            show_list()
-            menu_choice = 0
-            continue
-        elif menu_choice == 1:
-            new_item = input(str(len(shopping_list)+ 1) + ". ")
-            if new_item == "":
-                menu_choice = 0
-                break
-            else:
-                add_to_list(new_item)
-            continue
+    elif new_item.upper() == 'SHOW':
+        show_list()
+        continue
+
+    add_to_list(new_item)
+
+show_list()
