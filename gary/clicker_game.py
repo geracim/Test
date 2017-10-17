@@ -5,11 +5,7 @@ import random
 # parsing txt file for variable values
 # execfile(file_content)
 
-
-p_level = 1
-p_exp = 0
-p_continue = 0
-p_choice = ""
+breakout = 1
 
 def clear():
     if os.name == 'nt':
@@ -17,19 +13,37 @@ def clear():
     else:
         os.system('clear')
 
+def game():
+    print("Let the game begin.")
 
 def welcome():
-    print("Welcome to the Game.\n")
-    print("The purpose of this game is to reach level 10.\n")
-    print("You achieve new levels by gaining enough experience points (exp) to 'level up.'\n")
-    input("Press any key if you are ready to continue.\n > ")
-    clear()
+    print("welcome to the game.")
+    start = input("Press enter/return to start or Q to quit.\n> ").lower()
+    
+    if start == 'q':
+        print("Bye!")
+        breakout = 0
+        return False
+    else:
+        return True
+        breakout = 1
 
-def game():
+while True:
     clear()
-    # show intro for the first time
     welcome()
-    # show menu and teach user how to play
-    #menu(p_choice)
+    if breakout == 0:
+        break
+    else:
+        game()
 
-game()
+
+
+#
+#
+# while( quit == false ):
+#   if( scene == "menu" ):
+#     menu(stuff)
+#   if( scene == "game" ):
+#     game(stuff)
+#
+#
