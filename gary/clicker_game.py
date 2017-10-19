@@ -5,7 +5,7 @@ import random
 # parsing txt file for variable values
 # execfile(file_content)
 
-breakout = 1
+keep_playing = True
 
 def clear():
     if os.name == 'nt':
@@ -16,34 +16,18 @@ def clear():
 def game():
     print("Let the game begin.")
 
-def welcome():
-    print("welcome to the game.")
+def welcome(keep_playing):
+    print("welcome to the game.\n -----------------")
     start = input("Press enter/return to start or Q to quit.\n> ").lower()
-    
+    clear()
+
     if start == 'q':
         print("Bye!")
-        breakout = 0
-        return False
+        keep_playing = False
     else:
-        return True
-        breakout = 1
-
-while True:
-    clear()
-    welcome()
-    if breakout == 0:
-        break
-    else:
-        game()
+        print("Hi!")
 
 
-
-#
-#
-# while( quit == false ):
-#   if( scene == "menu" ):
-#     menu(stuff)
-#   if( scene == "game" ):
-#     game(stuff)
-#
-#
+while keep_playing == True:
+    welcome(keep_playing)
+    game()
