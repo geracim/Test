@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import sys
 import random
@@ -16,18 +18,19 @@ def clear():
 def game():
     print("Let the game begin.")
 
-def welcome(keep_playing):
+def welcome():
     print("welcome to the game.\n -----------------")
     start = input("Press enter/return to start or Q to quit.\n> ").lower()
     clear()
 
     if start == 'q':
         print("Bye!")
+        global keep_playing
         keep_playing = False
     else:
         print("Hi!")
 
 
 while keep_playing == True:
-    welcome(keep_playing)
+    welcome()
     game()
