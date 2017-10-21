@@ -4,20 +4,28 @@ import os
 import sys
 import random
 
-class vars:
+class game_vars:
     keep_playing = True
     current_score = 0
     p_lvl = 1
     multiplier = 5
-    lvl_1_cap = 500
-    lvl_2_cap = 1200
-   
+    
+class lvl_vars:
+    lvl_1_cap = 100
+    lvl_2_cap = 255
+    lvl_3_cap = 500
+    lvl_4_cap = 860
+
 
 def lvl_check():
-    if vars.current_score < vars.lvl_1_cap:
-        vars.p_lvl = 1
-    elif vars.current_score > vars.lvl_1_cap and vars.current_score < vars.lvl_2_cap:
-        vars.p_lvl = 2
+    if game_vars.current_score < lvl_vars.lvl_1_cap:
+        game_vars.p_lvl = 1
+    elif game_vars.current_score > lvl_vars.lvl_1_cap and game_vars.current_score < lvl_vars.lvl_2_cap:
+        game_vars.p_lvl = 2
+    elif game_vars.current_score > lvl_vars.lvl_2_cap and game_vars.current_score < lvl_vars.lvl_3_cap:
+        game_vars.p_lvl = 3
+    elif game_vars.current_score > lvl_vars.lvl_3_cap and game_vars.current_score < lvl_vars.lvl_4_cap:
+        game_vars.p_lvl = 4
 
 def clear():
     if os.name == 'nt':
@@ -26,7 +34,7 @@ def clear():
         os.system('clear')
 
 def calculate_score():
-    vars.current_score = vars.current_score + (vars.p_lvl * vars.multiplier)
+    game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * game_vars.multiplier)
 
 def game():
     print("""Keep tapping enter to earn points.
@@ -36,14 +44,17 @@ def game():
     clear()
 
     if start == 'q':
-        print("Your final score was {}. \nHope to see you again soon!".format(vars.current_score))
-        vars.keep_playing = False
+        print("Your final score was {}.".format(game_vars.current_score))
+        print("Your final level was: {}.".format(game_vars.p_lvl))
+        print("Hope to see you again soon!")
+        game_vars.keep_playing = False
     else:
         calculate_score()
-        print("Your score is: {}.".format(vars.current_score))
-        print("Your level is: {}.".format(vars.p_lvl))
+        lvl_check()
+        print("Your score is: {}.".format(game_vars.current_score))
+        print("Your level is: {}.".format(game_vars.p_lvl))
 
 clear()
 
-while vars.keep_playing == True:
+while game_vars.keep_playing == True:
     game()
