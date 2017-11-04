@@ -34,7 +34,12 @@ def clear():
         os.system('clear')
 
 def calculate_score():
-    game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * game_vars.multiplier)
+    if game_vars.p_lvl > 1 and game_vars.p_lvl < 2:
+        game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * (game_vars.multiplier**2 / 2))
+    elif game_vars.p_lvl > 2 and game_vars.p_lvl < 3:
+        game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * (game_vars.multiplier**3 / 2))
+    else:
+        game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * game_vars.multiplier)
 
 def game():
     print("""Keep tapping enter to earn points.
@@ -51,7 +56,9 @@ def game():
     else:
         calculate_score()
         lvl_check()
+        calculate_score()
         print("Your score is: {}.".format(game_vars.current_score))
+        print("Your multiplier is {}.".format(game_vars.p_lvl * game_vars.multiplier))
         print("Your level is: {}.".format(game_vars.p_lvl))
 
 clear()
