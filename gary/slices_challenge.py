@@ -27,9 +27,7 @@ def challenge1():
 	sorted_things.sort()
 	print("sorted copy of favorite things: {}\n".format(sorted_things))
 
-def challenge2():
-	
+def first_4(x):
+	return list(x).slice(0:4)
 
-
-
-challenge2()
+first_4()
