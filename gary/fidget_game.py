@@ -3,6 +3,7 @@
 import os
 import sys
 import random
+import time
 
 class game_vars:
     keep_playing = True
@@ -52,33 +53,56 @@ def clear():
         os.system('clear')
 
 def calculate_score():
-    if game_vars.p_lvl > 1 and game_vars.p_lvl < 2:
-        game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * (game_vars.multiplier**2 / 2))
-    elif game_vars.p_lvl > 2 and game_vars.p_lvl < 3:
-        game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * (game_vars.multiplier**3 / 2))
-    else:
-        game_vars.current_score = game_vars.current_score + (game_vars.p_lvl * game_vars.multiplier)
+    game_vars.current_score += int((game_vars.multiplier**game_vars.p_lvl / game_vars.p_lvl))
 
 def save():
-    file = open("./save_files/fidget_game_score.txt","w")
-    file.write(str(game_vars.current_score))
-    file.close()
+    try:
+        print("Saving your score.")
+        t = 0
+        for t in range(0,5):
+            print(".")
+            time.sleep(1)
+            t += 1    
+        file = open("fidget_game_score.txt","w")
+        file.write(str(game_vars.current_score))
+        file.close()
+        clear()
+        print("Save successful!")
+    except:
+        clear()
+        print("Couldn't save. Check save file.")
+        pass
 
 def load():
-    file = open("./save_files/fidget_game_score.txt","r")
-    game_vars.current_score = int(file.readline())
-    file.close()
+    try: 
+        print("Attempting to load previous score.")
+        t = 0
+        for t in range(0,5):
+            print(".")
+            time.sleep(1)
+            t += 1
+        file = open("fidget_game_score.txt","r")
+        game_vars.current_score = int(file.readline())
+        file.close()
+        clear()
+        print("Found your previous score: {}!".format(game_vars.current_score))
+    except:
+        clear()
+        print("Couldn't load! Check save file.\nIf this is your first time, you must save the game to create save file.")
+        pass
 
 def game():
-
-
-    print("""Keep tapping enter to earn points.
+    print("------------------")
+    print("""To load previous game, enter: 'l'.
+To save, enter: 's'.
+To quit, enter: 'q'
 ------------------""")
 
-    play = input("Tap Enter to play or 'q' to quit.\n> ").lower()
+    play = input("Keep tapping enter to earn points.\n> ").lower()
     clear()
 
     if play == 'q':
+        save()
         print("Your final score was {}.".format(game_vars.current_score))
         print("Your final level was: {}.".format(game_vars.p_lvl))
         print("Hope to see you again soon!")
@@ -87,12 +111,13 @@ def game():
         save()
     elif play == 'score':
         print(game_vars.current_score)
+    elif play == 'l':
+        load()
     else:
         calculate_score()
         lvl_check()
         calculate_score()
         print("Your score is: {}.".format(game_vars.current_score))
-        print("Your multiplier is {}.".format(game_vars.p_lvl * game_vars.multiplier))
         print("Your level is: {}.".format(game_vars.p_lvl))
 
 clear()
