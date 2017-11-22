@@ -1,3 +1,0 @@
-['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc \n', 'fringilla arcu congue metus aliquam mollis.
-Mauris nec maximus \n', 'purus. Maecenas sit amet pretium tellus. Praesent sed rhoncus \n', 'leo. Duis id commodo orci.
-Quisque at dignissim lacus. \n']

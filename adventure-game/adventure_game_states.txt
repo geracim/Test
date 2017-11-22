@@ -1,0 +1,11 @@
+{
+  "town" : { "description" : "The hero has entered the town of Cambria.", "options" : ["field", "tavern"], "encounter_rate" : 0 },
+  "mountain" : { "description" : "The hero has come to the foot of a mountain.", "options" : ["field"], "encounter_rate" : 95 },
+  "field" : { "description" : "The hero comes across a vast field of grass.", "options" : ["tower", "town", "mountain"], "encounter_rate" : 35 },
+  "tower" : { 
+  	"description" : "The hero enters the magician's tower.", 
+  	"options" : ["field"],
+  	"encounter_rate" : 25
+  },
+  "tavern" : { "description" : "The hero enters the tavern.", "options" : ["town"], "encounter_rate" : 0 }
+}

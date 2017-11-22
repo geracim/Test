@@ -1,4 +1,0 @@
-{
-  "town" : "the town has this text",
-  "mountain" : "the mountain has this text"
-}

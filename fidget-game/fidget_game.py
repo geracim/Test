@@ -61,7 +61,7 @@ def save():
         t = 0
         for t in range(0,5):
             print(".")
-            time.sleep(1)
+            time.sleep(0.3)
             t += 1    
         file = open("fidget_game_score.txt","w")
         file.write(str(game_vars.current_score))
@@ -79,7 +79,7 @@ def load():
         t = 0
         for t in range(0,5):
             print(".")
-            time.sleep(1)
+            time.sleep(0.3)
             t += 1
         file = open("fidget_game_score.txt","r")
         game_vars.current_score = int(file.readline())
