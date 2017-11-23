@@ -11,15 +11,19 @@ play = True
 ##########################################################################################
 
 class stateVars:
-    current_state = "town"
+    current_state = "Cambria"
     has_seen_menu = False
     system_response = None
     current_scene = None
+    current_enemy_type = None
+    current_enemy_level = None
+    enemy_types = None
+
 
 ##########################################################################################
 
 class staticData:
-    world_definition = {}
+    world_definitions = {}
     save_file_name = "adventure_game_save.txt"
 
 ##########################################################################################
@@ -126,14 +130,13 @@ class sceneLoad:
                 stateVars.system_response = "Ah, I found you, adventurer.\nWe left off at the {}.".format(stateVars.current_state)
             else:
                 stateVars.system_response = "Hmm... Have we met before, adventurer?\nIf this is the first time, please enter 's' to have me remember this meeting spot."
-
             return sceneExplore()
+
         else:
             return self
 
 ##########################################################################################
 class sceneEncounter:
-    enemy_name = "whatever"
     actions = [ "win", "lose" ]
 
     def onOpen(self):
@@ -143,7 +146,7 @@ class sceneEncounter:
         pass
 
     def displayState(self):
-        print("You are being attacked by a " + self.enemy_name)
+        print("You are being attacked by a " + stateVars.current_enemy_type)
         print("your choices: " + str(self.actions) )
 
     def requestInput(self):
@@ -151,10 +154,13 @@ class sceneEncounter:
 
     def respondToInput(self,command):
         if command == 'win':
-            stateVars.system_response = "HOLY SHITSTOCKINGS, YOU WON!"
+            stateVars.system_response = "You survived."
             return sceneExplore()
-        elif command == 'lose':
+        elif command == "lose":
+            stateVars.system_response = "You died."
             return sceneLoad()
+
+        return self
 
 ##########################################################################################
 class sceneExplore:
@@ -170,7 +176,7 @@ class sceneExplore:
         if stateVars.system_response:
             print(stateVars.system_response)
 
-        print("From here you can go to: " + str(staticData.world_definitions[stateVars.current_state]["options"]))
+        print("From here you can go to: {}".format(str(staticData.world_definitions[stateVars.current_state]["options"])))
         print(staticData.world_definitions[stateVars.current_state]["description"])
         
         if stateVars.has_seen_menu == False:
@@ -201,6 +207,10 @@ class sceneExplore:
             stateVars.current_state = command
             destination = staticData.world_definitions[command]
             if random.randint(1, 100) < destination["encounter_rate"]:
+                enemyTypeIndex = random.randint(0, len(destination["enemy_types"])-1)
+                enemyType = destination["enemy_types"][enemyTypeIndex]
+                stateVars.current_enemy_type = enemyType["id"]
+                stateVars.current_enemy_level = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
                 return sceneEncounter()
 
         return self
