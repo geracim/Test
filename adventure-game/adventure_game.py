@@ -175,19 +175,26 @@ class sceneExplore:
         clear()
         if stateVars.system_response:
             print(stateVars.system_response)
-
-        print("From here you can go to: {}".format(str(staticData.world_definitions[stateVars.current_state]["options"])))
-        print(staticData.world_definitions[stateVars.current_state]["description"])
         
         if stateVars.has_seen_menu == False:
-            print("""|Hit Enter/Return to play.
+            print("""~~~~~~~~~~~~ MENU ~~~~~~~~~~~~
+|Hit Enter/Return to play.
 |Enter 'l' to load a past game.
 |Enter 's' to save your current game.
 |Enter 'm' to show this menu again.
-|Enter 'q' to quit without saving.""")
+|Enter 'q' to quit without saving.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~""")
+
+        # This describes where the Hero is currently (the current state)
+        print(staticData.world_definitions[stateVars.current_state]["description"])
+        # This describes the Hero's options (possible state transitions)
+        print("""~~~~~~~~~~~~ MAP ~~~~~~~~~~~~
+From here you can travel to: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~""".format(str(staticData.world_definitions[stateVars.current_state]["options"])))
+
 
     def requestInput(self):
-        return input("What would you like to do?\n> ")
+        return input("What would you like to do?\n> ").lower()
 
     def respondToInput(self,command):
         stateVars.has_seen_menu = True
