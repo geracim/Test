@@ -1,0 +1,9 @@
+{
+   "scene.save.open" : "Trying to remember our meeting place for next time.",
+   "scene.save.success" : "I'll remember this as the last place we met!",
+   "scene.save.failure" : "I couldn't find you, adventurer.",
+
+   "scene.load.open" : "Let's see... where did we last meet?",
+   "scene.load.success" : "Ah, I found you, adventurer.\nWe left off at the {profile.current_state}.",
+   "scene.load.failure" : "Hmm... Have we met before, adventurer?\nIf this is the first time, please enter 's' to have me remember this meeting spot.",
+}

@@ -10,21 +10,25 @@ play = True
 #################################### Model & Data ########################################
 ##########################################################################################
 
-class stateVars:
-    current_state = "Cambria"
+class dynamicData:
+    profile = {}
+    #current_state = "Cambria"
     has_seen_menu = False
     system_response = None
     current_scene = None
-    current_enemy_type = None
-    current_enemy_level = None
-    enemy_types = None
+    #current_enemy_type = None
+    #current_enemy_level = None
+    #enemy_types = None
 
 
 ##########################################################################################
 
 class staticData:
-    world_definitions = {}
-    save_file_name = "adventure_game_save.txt"
+    active_game = "gary"
+    config = {}
+    world_definition = {}
+    strings = {}
+    #save_file_name = "adventure_game_save.txt"
 
 ##########################################################################################
 ######################################Utility Functions###################################
@@ -36,35 +40,72 @@ def clear():
     else:
         os.system('clear')
 
-def saveState():
+# reads a file at a specified path and exports its contents to json
+# returns json object if successful, None otherwise
+def loadJsonFromFile(file_path):
     try:
-        with open (staticData.save_file_name,"w") as out_file:
-            out_file.write(stateVars.current_state)
+        with open (file_path, 'r') as in_file:
+            rawStringContents = in_file.read()
+            return json.loads(rawStringContents)
+    except:
+        return None
+
+# writes a file at a specified path filled with supplied json
+# returns true if successful, false otherwise
+def saveJsonToFile(file_path, json_object):
+    try:
+        with open (file_path, 'w') as out_file:
+            # when using json."dump to string", indent=4 specifies tab spacing
+            # this will result in a nicely formatted human readible file
+            rawStringContents = json.dumps(json_object, indent=4)
+            out_file.write(rawStringContents)
         result = True
     except:
         result = False
     return result
 
-def loadState():
-    try: 
-        with open (staticData.save_file_name,"r") as in_file:
-            stateVars.current_state = in_file.readline()
-        result = True  
-    except:
-        result = False
-    return result
+#def saveState():
+#    save_file = staticData.active_game + ".sav"
+#    try:
+#        with open (save_file,"w") as out_file:
+#            out_file.write(stateVars.current_state)
+#        result = True
+#    except:
+#        result = False
+#    return result
+
+#def loadState():
+#    save_file = staticData.active_game + ".sav"
+#    try: 
+#        with open (save_file,"r") as in_file:
+#            stateVars.current_state = in_file.readline()
+#        result = True  
+#    except:
+#        result = False
+#    return result
 
 def loadData():
-    with open ('adventure_game_states.txt', 'r') as in_file:
-        rawStringContents = in_file.read()
-        staticData.world_definitions = json.loads(rawStringContents)
+    # Load the config for the active game into staticData
+    config_file_path = os.path.join(staticData.active_game, 'config.json')
+    staticData.config = loadJsonFromFile(config_file_path)
+
+    # Load the strings for the active game into staticData
+    strings_file_path = os.path.join(staticData.active_game, 'strings_en.json')
+    staticData.strings = loadJsonFromFile(strings_file_path)
+
+    # Load the world definition for the active game into staticData
+    world_definition_file_path = os.path.join(staticData.active_game, 'world_definition.json')
+    staticData.world_definition = loadJsonFromFile(world_definition_file_path)
+
+    # Set up the dynamic profile with the supplied default profile in config
+    dynamicData.profile = staticData.config["defaultProfile"]
 
 def changeScene( newScene ):
-    if newScene != stateVars.current_scene:
-        if stateVars.current_scene != None:
-            stateVars.current_scene.onClose()
-        stateVars.current_scene = newScene
-        stateVars.current_scene.onOpen()
+    if newScene != dynamicData.current_scene:
+        if dynamicData.current_scene != None:
+            dynamicData.current_scene.onClose()
+        dynamicData.current_scene = newScene
+        dynamicData.current_scene.onOpen()
 
 ##########################################################################################
 ########################################Scenes############################################
@@ -93,10 +134,12 @@ class sceneSave:
     def respondToInput(self,command):
         self.t += 1
         if self.t > 5:
-            if saveState():
-                stateVars.system_response = "I'll remember this as the last place we met!"
+            # try saving the dynamicData.profile to a save file named for this game
+            save_file = staticData.active_game + ".sav"
+            if saveJsonToFile(save_file, dynamicData.profile):
+                dynamicData.system_response = "I'll remember this as the last place we met!"
             else:
-                stateVars.system_response = "I couldn't find you, adventurer."
+                dynamicData.system_response = "I couldn't find you, adventurer."
 
             return sceneExplore()
         else:
@@ -126,10 +169,16 @@ class sceneLoad:
     def respondToInput(self,command):
         self.t += 1
         if self.t > 5:
-            if loadState():
-                stateVars.system_response = "Ah, I found you, adventurer.\nWe left off at the {}.".format(stateVars.current_state)
+            # try loading the dynamicData.profile from a save file named for this game
+            # if it fails, the loadJsonFromFile function will return none
+            save_file = staticData.active_game + ".sav"
+            load_result = loadJsonFromFile( save_file )
+            
+            if load_result:
+                dynamicData.profile = load_result
+                dynamicData.system_response = "Ah, I found you, adventurer.\nWe left off at the {}.".format(dynamicData.profile["current_state"])
             else:
-                stateVars.system_response = "Hmm... Have we met before, adventurer?\nIf this is the first time, please enter 's' to have me remember this meeting spot."
+                dynamicData.system_response = "Hmm... Have we met before, adventurer?\nIf this is the first time, please enter 's' to have me remember this meeting spot."
             return sceneExplore()
 
         else:
@@ -146,7 +195,7 @@ class sceneEncounter:
         pass
 
     def displayState(self):
-        print("You are being attacked by a " + stateVars.current_enemy_type)
+        print("You are being attacked by a " + dynamicData.profile["current_enemy_type"])
         print("your choices: " + str(self.actions) )
 
     def requestInput(self):
@@ -154,10 +203,10 @@ class sceneEncounter:
 
     def respondToInput(self,command):
         if command == 'win':
-            stateVars.system_response = "You survived."
+            dynamicData.system_response = "You survived."
             return sceneExplore()
         elif command == "lose":
-            stateVars.system_response = "You died."
+            dynamicData.system_response = "You died."
             return sceneLoad()
 
         return self
@@ -173,10 +222,10 @@ class sceneExplore:
 
     def displayState(self):
         clear()
-        if stateVars.system_response:
-            print(stateVars.system_response)
+        if dynamicData.system_response:
+            print(dynamicData.system_response)
         
-        if stateVars.has_seen_menu == False:
+        if dynamicData.has_seen_menu == False:
             print("""~~~~~~~~~~~~ MENU ~~~~~~~~~~~~
 |Hit Enter/Return to play.
 |Enter 'l' to load a past game.
@@ -185,21 +234,22 @@ class sceneExplore:
 |Enter 'q' to quit without saving.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~""")
 
+        area = staticData.world_definition[dynamicData.profile["current_state"]]
         # This describes where the Hero is currently (the current state)
-        print(staticData.world_definitions[stateVars.current_state]["description"])
+        print(area["description"])
         # This describes the Hero's options (possible state transitions)
         print("""~~~~~~~~~~~~ MAP ~~~~~~~~~~~~
 From here you can travel to: {}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~""".format(str(staticData.world_definitions[stateVars.current_state]["options"])))
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~""".format(str(area["options"])))
 
 
     def requestInput(self):
         return input("What would you like to do?\n> ").lower()
 
     def respondToInput(self,command):
-        stateVars.has_seen_menu = True
-        stateVars.system_response = None
-        area = staticData.world_definitions[stateVars.current_state]
+        dynamicData.has_seen_menu = True
+        dynamicData.system_response = None
+        area = staticData.world_definition[dynamicData.profile["current_state"]]
 
         if command == 'l':
             return sceneLoad()
@@ -209,15 +259,15 @@ From here you can travel to: {}
             global play
             play = False
         elif command == 'm':
-            stateVars.has_seen_menu = False
+            dynamicData.has_seen_menu = False
         elif command in area["options"]:
-            stateVars.current_state = command
-            destination = staticData.world_definitions[command]
+            dynamicData.profile["current_state"] = command
+            destination = staticData.world_definition[command]
             if random.randint(1, 100) < destination["encounter_rate"]:
                 enemyTypeIndex = random.randint(0, len(destination["enemy_types"])-1)
                 enemyType = destination["enemy_types"][enemyTypeIndex]
-                stateVars.current_enemy_type = enemyType["id"]
-                stateVars.current_enemy_level = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
+                dynamicData.profile["current_enemy_type"] = enemyType["id"]
+                dynamicData.profile["current_enemy_level"] = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
                 return sceneEncounter()
 
         return self
@@ -230,9 +280,9 @@ loadData()
 changeScene( sceneExplore() )
 
 while play == True:
-    stateVars.current_scene.displayState()
-    command = stateVars.current_scene.requestInput()
-    changeScene( stateVars.current_scene.respondToInput(command) )
+    dynamicData.current_scene.displayState()
+    command = dynamicData.current_scene.requestInput()
+    changeScene( dynamicData.current_scene.respondToInput(command) )
 
 
 

@@ -1,0 +1,115 @@
+{
+  	"cambria" : { 
+  		"description" : "The hero has come to the town of Cambria.",
+  		"options" : ["field", "tavern", "temple"],
+  		"enemy_types" : [],
+  		"encounter_rate" : 0,
+  		"npc" : [],
+  		"npc_options" : ["approach", "pickpocket"] 
+	},
+
+  	"temple" : {
+  		"description" : "The hero enters the Holy temple of Cambria.",
+  		"options" : ["cambria", "crypt"],
+  		"enemy_types" : [],
+  		"encounter_rate" : 0,
+  		"npc" : ["priest", "priest's assistant", "worshipper 1", "worshipper 2", "worshipper 3"],
+  		"npc_options" : ["approach", "pickpocket"] 
+  	},
+
+  	"crypt" : {
+  		"description" : "The hero enters the crypt of Cambria.",
+  		"options" : ["catacombs", "temple"],
+  		"enemy_types" : [
+  			{"id": "rat",
+  			"levelRange": [1,2]}
+  			],
+  		"encounter_rate" : 20,
+  		"npc" : [],
+  		"npc_options" : ["approach", "pickpocket"]
+  	},
+
+  	"catacombs" : {
+  		"description" : "The hero enters the ancient catacombs below Cambria.",
+  		"options" : ["crypt", "mausoleum"],
+  		"enemy_types" : [
+  			{"id": "necromancer",
+  			"levelRange": [3,4]},
+  			{"id": "rat",
+  			"levelRange": [1,3]},
+  			{"id": "skeleton",
+  			"levelRange": [2,4]},
+  			{"id": "lost soul",
+  			"levelRange": [1,5]}
+  			],
+  		"encounter_rate" : 45,
+  		"npc" : [],
+  		"npc_options" : ["approach", "pickpocket"]
+  	},
+
+  	"mausoleum" : {
+  		"description" : "The hero enters the mausoleum of ancient Kings of Cambria.",
+  		"options" : ["catacombs", "field"],
+  		"enemy_types" : [
+  			{"id": "necromancer",
+  			"levelRange": [4,6]},
+  			{"id": "wight",
+  			"levelRange": [5,8]}
+  			],
+  		"encounter_rate" : 85,
+  		"npc" : [],
+  		"npc_options" : ["approach", "pickpocket"]
+  	},
+
+  	"mountain" : { 
+  		"description" : "The hero has come to the foot of a mountain.", 
+  		"options" : ["field"],
+  		"enemy_types" : [
+  			{"id": "rat",
+  			"levelRange": [1,2]}
+  			],
+  		"encounter_rate" : 70,
+  		"npc" : [],
+  		"npc_options" : ["approach", "pickpocket"]
+  	},
+
+  	"field" : { 
+  		"description" : "The hero comes across a vast field of grass.", 
+  		"options" : ["tower", "cambria", "mountain"], 
+  		"enemy_types" : [
+  			{"id": "plains wolf",
+  			"levelRange": [2,3]},
+  			{"id": "grass snake",
+  			"levelRange": [1,3]}
+  			],
+  		"encounter_rate" : 35,
+  		"npc" : [],
+  		"npc_options" : ["approach", "pickpocket"]
+  	},
+
+  	"tower" : { 
+  		"description" : "The hero enters the magician's tower.", 
+  		"options" : ["field"],
+  		"enemy_types" : [
+  			{"id": "ether wyrm",
+  			"levelRange": [1,2]}
+  			],
+  		"encounter_rate" : 25,
+  		"npc" : ["Grand Magister Albion", "scryer Joseph", "scryer Lamia", "magister's assistant Franklin", "apprentice Martin"],
+  		"npc_options" : ["approach", "pickpocket"]
+  	},
+
+	"tavern" : { 
+  		"description" : "The hero enters the tavern.", 
+  		"options" : ["cambria"],
+  		"enemy_types" : [
+  			{"id": "rat",
+  			"levelRange": [1,1]},
+  			{"id": "drunkard",
+  			"levelRange": [1,2]}
+  			],
+  		"encounter_rate" : 5,
+  		"npc" : [],
+  		"npc_options" : ["approach", "pickpocket"]
+	}
+}
