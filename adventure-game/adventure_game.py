@@ -6,7 +6,6 @@ import os
 import time
 import random
 
-play = True
 ##########################################################################################
 #################################### Model & Data ########################################
 ##########################################################################################
@@ -16,6 +15,7 @@ class dynamicData:
     has_seen_menu = False
     system_response = None
     current_scene = None
+    play = True
 
 
 ##########################################################################################
@@ -269,8 +269,7 @@ From here you can travel to: {}
         elif command == 's':
             return sceneSave()
         elif command == 'q':
-            global play
-            play = False
+            dynamicData.play = False
         elif command == 'm':
             dynamicData.has_seen_menu = False
         elif command in area["options"]:
@@ -292,7 +291,7 @@ From here you can travel to: {}
 loadData()
 changeScene( sceneExplore() )
 
-while play == True:
+while dynamicData.play == True:
     dynamicData.current_scene.displayState()
     command = dynamicData.current_scene.requestInput()
     changeScene( dynamicData.current_scene.respondToInput(command) )
