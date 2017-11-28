@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import re
 import os
 import time
 import random
@@ -34,6 +35,43 @@ def clear():
         os.system('cls')
     else:
         os.system('clear')
+
+# takes an input string and runs it through the staticData strings for replacing
+def localize(input_string):
+    if input_string in staticData.strings:
+        result = staticData.strings[input_string]
+        # Um, regular expressions are a whole mess of bullshit, but this means:
+        # "find all things inside {} and give me a list of them"
+        substitutions = re.findall('\{([^}]+)\}', result)
+        if substitutions:
+            for matchKey in substitutions:
+                # split the contained string within the braces into an array of keys
+                replaceKeyComponents = matchKey.split('.')
+                node = None
+                # check if the first key is an attribute of either the staticData or dynamicData classes
+                if hasattr(dynamicData, replaceKeyComponents[0]):
+                    node = getattr(dynamicData, replaceKeyComponents[0])
+                if hasattr(staticData, replaceKeyComponents[0]):
+                    node = getattr(staticData, replaceKeyComponents[0])
+
+                if node:
+                    # remove the first item from the list
+                    replaceKeyComponents.pop(0)
+                    # walk the json object using the keys
+                    for key in replaceKeyComponents:
+                        if key in node:
+                            node = node[key]
+                        else:
+                            node = None
+                            break
+                if node:
+                    # replace the string
+                    result = result.replace( "{" + matchKey + "}", str(node) )
+        return result
+    else:
+        return "[" + input_string + "]"
+
+
 
 # reads a file at a specified path and exports its contents to json
 # returns json object if successful, None otherwise
@@ -97,7 +135,7 @@ class sceneSave:
 
     def displayState(self):
         if self.t == 0:
-            print("Trying to remember our meeting place for next time.")
+            print( localize("scene.save.open") )
         else:
             print(".")        
 
@@ -112,9 +150,9 @@ class sceneSave:
             # try saving the dynamicData.profile to a save file named for this game
             save_file = staticData.active_game + ".sav"
             if saveJsonToFile(save_file, dynamicData.profile):
-                dynamicData.system_response = "I'll remember this as the last place we met!"
+                dynamicData.system_response = localize("scene.save.success")
             else:
-                dynamicData.system_response = "I couldn't find you, adventurer."
+                dynamicData.system_response = localize("scene.save.failure")
 
             return sceneExplore()
         else:
@@ -132,7 +170,7 @@ class sceneLoad:
 
     def displayState(self):
         if self.t == 0:
-            print("Let's see... where did we last meet?")
+            print( localize("scene.load.open") )
         else:
             print(".")
 
@@ -151,9 +189,9 @@ class sceneLoad:
             
             if load_result:
                 dynamicData.profile = load_result
-                dynamicData.system_response = "Ah, I found you, adventurer.\nWe left off at the {}.".format(dynamicData.profile["current_state"])
+                dynamicData.system_response = localize("scene.load.success")
             else:
-                dynamicData.system_response = "Hmm... Have we met before, adventurer?\nIf this is the first time, please enter 's' to have me remember this meeting spot."
+                dynamicData.system_response = localize("scene.load.failure")
             return sceneExplore()
 
         else:
