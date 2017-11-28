@@ -1,4 +1,6 @@
 {
+    "defaultScene" : "explore",
+    
   	"defaultProfile" : {
       "current_state": "cambria",
       "current_enemy_type": "",

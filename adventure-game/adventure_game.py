@@ -25,6 +25,7 @@ class staticData:
     config = {}
     world_definition = {}
     strings = {}
+    sceneFactory = {}
 
 ##########################################################################################
 ######################################Utility Functions###################################
@@ -113,12 +114,14 @@ def loadData():
     # Set up the dynamic profile with the supplied default profile in config
     dynamicData.profile = staticData.config["defaultProfile"]
 
-def changeScene( newScene ):
-    if newScene != dynamicData.current_scene:
-        if dynamicData.current_scene != None:
-            dynamicData.current_scene.onClose()
-        dynamicData.current_scene = newScene
-        dynamicData.current_scene.onOpen()
+def changeScene( new_scene_id ):
+    # get the scene factory for the specified id, and call it to create a new scene
+    newScene = staticData.sceneFactory[new_scene_id]()
+
+    if dynamicData.current_scene != None:
+        dynamicData.current_scene.onClose()
+    dynamicData.current_scene = newScene
+    dynamicData.current_scene.onOpen()
 
 ##########################################################################################
 ########################################Scenes############################################
@@ -154,9 +157,11 @@ class sceneSave:
             else:
                 dynamicData.system_response = localize("scene.save.failure")
 
-            return sceneExplore()
+            return staticData.config["defaultScene"]
         else:
-            return self
+            return None
+
+staticData.sceneFactory['save'] = lambda: sceneSave()
 
 ##########################################################################################
 class sceneLoad:
@@ -192,10 +197,12 @@ class sceneLoad:
                 dynamicData.system_response = localize("scene.load.success")
             else:
                 dynamicData.system_response = localize("scene.load.failure")
-            return sceneExplore()
+            return staticData.config["defaultScene"]
 
         else:
-            return self
+            return None
+
+staticData.sceneFactory['load'] = lambda: sceneLoad()
 
 ##########################################################################################
 class sceneEncounter:
@@ -217,12 +224,14 @@ class sceneEncounter:
     def respondToInput(self,command):
         if command == 'win':
             dynamicData.system_response = "You survived."
-            return sceneExplore()
+            return 'explore'
         elif command == "lose":
             dynamicData.system_response = "You died."
-            return sceneLoad()
+            return 'load'
 
-        return self
+        return None
+
+staticData.sceneFactory['encounter'] = lambda: sceneEncounter()
 
 ##########################################################################################
 class sceneExplore:
@@ -265,9 +274,9 @@ From here you can travel to: {}
         area = staticData.world_definition[dynamicData.profile["current_state"]]
 
         if command == 'l':
-            return sceneLoad()
+            return 'load'
         elif command == 's':
-            return sceneSave()
+            return 'save'
         elif command == 'q':
             dynamicData.play = False
         elif command == 'm':
@@ -280,21 +289,25 @@ From here you can travel to: {}
                 enemyType = destination["enemy_types"][enemyTypeIndex]
                 dynamicData.profile["current_enemy_type"] = enemyType["id"]
                 dynamicData.profile["current_enemy_level"] = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
-                return sceneEncounter()
+                return 'encounter'
 
-        return self
+        return None
+
+staticData.sceneFactory['explore'] = lambda: sceneExplore()
 
 ##########################################################################################        
 #######################################Core loop##########################################
 ##########################################################################################
 
 loadData()
-changeScene( sceneExplore() )
+changeScene( staticData.config["defaultScene"] )
 
 while dynamicData.play == True:
     dynamicData.current_scene.displayState()
     command = dynamicData.current_scene.requestInput()
-    changeScene( dynamicData.current_scene.respondToInput(command) )
+    newScene = dynamicData.current_scene.respondToInput(command)
+    if newScene:
+        changeScene( newScene )
 
 
 
