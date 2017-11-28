@@ -1,5 +1,5 @@
 {
-  	"Cambria" : { 
+  	"cambria" : { 
   		"description" : "The hero has come to the town of Cambria.",
   		"options" : ["field", "tavern", "temple"],
   		"enemy_types" : [],
@@ -10,7 +10,7 @@
 
   	"temple" : {
   		"description" : "The hero enters the Holy temple of Cambria.",
-  		"options" : ["Cambria", "crypt"],
+  		"options" : ["cambria", "crypt"],
   		"enemy_types" : [],
   		"encounter_rate" : 0,
   		"npc" : ["priest", "priest's assistant", "worshipper 1", "worshipper 2", "worshipper 3"],
@@ -75,7 +75,7 @@
 
   	"field" : { 
   		"description" : "The hero comes across a vast field of grass.", 
-  		"options" : ["tower", "Cambria", "mountain"], 
+  		"options" : ["tower", "cambria", "mountain"], 
   		"enemy_types" : [
   			{"id": "plains wolf",
   			"levelRange": [2,3]},
@@ -101,7 +101,7 @@
 
 	"tavern" : { 
   		"description" : "The hero enters the tavern.", 
-  		"options" : ["Cambria"],
+  		"options" : ["cambria"],
   		"enemy_types" : [
   			{"id": "rat",
   			"levelRange": [1,1]},
