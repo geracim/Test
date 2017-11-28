@@ -12,13 +12,9 @@ play = True
 
 class dynamicData:
     profile = {}
-    #current_state = "Cambria"
     has_seen_menu = False
     system_response = None
     current_scene = None
-    #current_enemy_type = None
-    #current_enemy_level = None
-    #enemy_types = None
 
 
 ##########################################################################################
@@ -28,7 +24,6 @@ class staticData:
     config = {}
     world_definition = {}
     strings = {}
-    #save_file_name = "adventure_game_save.txt"
 
 ##########################################################################################
 ######################################Utility Functions###################################
@@ -63,26 +58,6 @@ def saveJsonToFile(file_path, json_object):
     except:
         result = False
     return result
-
-#def saveState():
-#    save_file = staticData.active_game + ".sav"
-#    try:
-#        with open (save_file,"w") as out_file:
-#            out_file.write(stateVars.current_state)
-#        result = True
-#    except:
-#        result = False
-#    return result
-
-#def loadState():
-#    save_file = staticData.active_game + ".sav"
-#    try: 
-#        with open (save_file,"r") as in_file:
-#            stateVars.current_state = in_file.readline()
-#        result = True  
-#    except:
-#        result = False
-#    return result
 
 def loadData():
     # Load the config for the active game into staticData
