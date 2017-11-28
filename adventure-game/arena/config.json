@@ -1,0 +1,9 @@
+{
+    "defaultScene" : "explore",
+    
+  	"defaultProfile" : {
+      "current_state": "arena",
+      "current_enemy_type": "",
+      "current_enemy_level": 0
+    }
+}

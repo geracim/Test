@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import json
-import re
 import os
-import time
 import random
+import re
+import sys
+import time
 
 ##########################################################################################
 #################################### Model & Data ########################################
@@ -21,7 +22,7 @@ class dynamicData:
 ##########################################################################################
 
 class staticData:
-    active_game = "gary"
+    active_game = None
     config = {}
     world_definition = {}
     strings = {}
@@ -98,7 +99,13 @@ def saveJsonToFile(file_path, json_object):
         result = False
     return result
 
-def loadData():
+def loadData( game_name ):
+    if not os.path.isdir(game_name):
+        print("Could not find a game with the name: " + game_name)
+        exit()
+
+    staticData.active_game = game_name
+
     # Load the config for the active game into staticData
     config_file_path = os.path.join(staticData.active_game, 'config.json')
     staticData.config = loadJsonFromFile(config_file_path)
@@ -299,9 +306,17 @@ staticData.sceneFactory['explore'] = lambda: sceneExplore()
 #######################################Core loop##########################################
 ##########################################################################################
 
-loadData()
+# if the script was run with a command line argument, load that game
+if len(sys.argv) > 1:
+    loadData(sys.argv[1])
+# if no arguments are supplied, default to gary data
+else:
+    loadData('gary')
+
+# load the default scene as specified in the game config
 changeScene( staticData.config["defaultScene"] )
 
+# main loop
 while dynamicData.play == True:
     dynamicData.current_scene.displayState()
     command = dynamicData.current_scene.requestInput()

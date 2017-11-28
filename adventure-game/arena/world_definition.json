@@ -1,0 +1,10 @@
+{
+  "arena" : { 
+  	"description" : "You stand in a massive arena currently deviod of any and all choice",
+  	"options" : [],
+  	"enemy_types" : [],
+  	"encounter_rate" : 0,
+    "npc" : [],
+    "npc_options" : []
+	}
+}
