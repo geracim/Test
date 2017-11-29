@@ -1,19 +1,53 @@
 {
   	"cambria" : { 
   		"description" : "The hero has come to the town of Cambria.",
-  		"options" : ["field", "tavern", "temple"],
+  		"options" : ["field", "tavern", "temple", "arena"],
   		"enemy_types" : [],
   		"encounter_rate" : 0,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"] 
-	},
+	  },
+
+    "arena" : {
+      "description" : "The hero has entered the Arena of Cambria.",
+      "options" : ["cambria"],
+      "enemy_types" : [
+        {"id": "court jester",
+        "levelRange": [1,2]},
+        {"id": "thief",
+        "levelRange": [2,5]},
+        {"id": "disgraced warrior",
+        "levelRange": [3,7]},
+        {"id": "holy knight",
+        "levelRange": [5,10]},
+        {"id": "court champion",
+        "levelRange": [8,14]}
+      ],
+      "encounter_rate" : 100,
+      "npc" : [],
+      "npc_options" : ["approach", "pickpocket"]       
+    },
+
+    "jail" : {
+      "description" : "The hero is in a jail cell.",
+      "options" : [],
+      "enemy_types" : [
+        {"id": "rat",
+        "levelRange": [1,2]},
+        {"id": "thief",
+        "levelRange": [2,5]}
+      ],
+      "encounter_rate" : 100,
+      "npc" : ["rufous"],
+      "npc_options" : ["approach", "pickpocket"]       
+    },
 
   	"temple" : {
   		"description" : "The hero enters the Holy temple of Cambria.",
   		"options" : ["cambria", "crypt"],
   		"enemy_types" : [],
   		"encounter_rate" : 0,
-  		"npc" : ["priest", "priest's assistant", "worshipper 1", "worshipper 2", "worshipper 3"],
+  		"npc" : ["grand scion", "priest", "priest's assistant", "worshipper 1", "worshipper 2", "worshipper 3"],
   		"npc_options" : ["approach", "pickpocket"] 
   	},
 
@@ -23,7 +57,7 @@
   		"enemy_types" : [
   			{"id": "rat",
   			"levelRange": [1,2]}
-  			],
+			],
   		"encounter_rate" : 20,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
@@ -41,7 +75,7 @@
   			"levelRange": [2,4]},
   			{"id": "lost soul",
   			"levelRange": [1,5]}
-  			],
+			],
   		"encounter_rate" : 45,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
@@ -55,7 +89,7 @@
   			"levelRange": [4,6]},
   			{"id": "wight",
   			"levelRange": [5,8]}
-  			],
+			],
   		"encounter_rate" : 85,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
@@ -67,7 +101,7 @@
   		"enemy_types" : [
   			{"id": "rat",
   			"levelRange": [1,2]}
-  			],
+			],
   		"encounter_rate" : 70,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
@@ -81,7 +115,7 @@
   			"levelRange": [2,3]},
   			{"id": "grass snake",
   			"levelRange": [1,3]}
-  			],
+			],
   		"encounter_rate" : 35,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
@@ -93,9 +127,9 @@
   		"enemy_types" : [
   			{"id": "ether wyrm",
   			"levelRange": [1,2]}
-  			],
+			],
   		"encounter_rate" : 25,
-  		"npc" : ["Grand Magister Albion", "scryer Joseph", "scryer Lamia", "magister's assistant Franklin", "apprentice Martin"],
+  		"npc" : ["grand magister albion", "scryer joseph", "scryer lamia", "magister's assistant franklin", "apprentice martin"],
   		"npc_options" : ["approach", "pickpocket"]
   	},
 
@@ -107,7 +141,7 @@
   			"levelRange": [1,1]},
   			{"id": "drunkard",
   			"levelRange": [1,2]}
-  			],
+			],
   		"encounter_rate" : 5,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
