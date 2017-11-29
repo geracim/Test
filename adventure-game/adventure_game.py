@@ -118,14 +118,14 @@ def loadData( game_name ):
     config_file_path = os.path.join(staticData.active_game, 'config.json')
     staticData.config = loadJsonFromFile(config_file_path)
     if not staticData.config:
-        print(game_name + " game has broken config data")
+        print("The \"" + game_name + "\" game has broken config data")
         exit()
 
     # Load the strings for the active game into staticData
     strings_file_path = os.path.join(staticData.active_game, 'strings_en.json')
     staticData.strings = loadJsonFromFile(strings_file_path)
     if not staticData.strings:
-        print(game_name + " game has broken strings data")
+        print("The \"" + game_name + "\" game has broken strings data")
         exit()
 
     # Load the world definition for the active game into staticData
