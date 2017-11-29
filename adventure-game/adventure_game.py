@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import json
 import os
 import random
-import re
 import sys
 import time
+
+from engine import io, loc
 
 ##########################################################################################
 #################################### Model & Data ########################################
@@ -38,74 +38,14 @@ def clear():
     else:
         os.system('clear')
 
-# takes an input string and runs it through the staticData strings for replacing
-def localize(input_string, localData=None):
-    if input_string in staticData.strings:
-        result = staticData.strings[input_string]
+def loadDataElement( element, file_extra_tag="" ):
+    config_file_path = os.path.join(staticData.active_game, element + file_extra_tag + '.json')
+    data = io.loadJsonFromFile(config_file_path)
+    if not data:
+        print("The \"" + staticData.active_game + "\" game has broken " + element + " data")
+        exit()
+    setattr(staticData, element, data)
 
-        # if result is not a string, assume its a list of strings and join them into a newline delimited string
-        if not isinstance( result, str ):
-            result = '\n'.join(result)
-
-        # Um, regular expressions are a whole mess of bullshit, but this means:
-        # "find all things inside {} and give me a list of them"
-        substitutions = re.findall('\{([^}]+)\}', result)
-        if substitutions:
-            for matchKey in substitutions:
-                # split the contained string within the braces into an array of keys
-                replaceKeyComponents = matchKey.split('.')
-                node = None
-                # check if the first key is an attribute of either the staticData or dynamicData classes
-                firstKey = replaceKeyComponents[0]
-                if firstKey in localData:
-                    node = localData[firstKey]
-                elif hasattr(dynamicData, firstKey):
-                    node = getattr(dynamicData, firstKey)
-                elif hasattr(staticData, firstKey):
-                    node = getattr(staticData, firstKey)
-
-                if node:
-                    # remove the first item from the list
-                    replaceKeyComponents.pop(0)
-                    # walk the json object using the keys
-                    for key in replaceKeyComponents:
-                        if key in node:
-                            node = node[key]
-                        else:
-                            node = None
-                            break
-                if node:
-                    # replace the string
-                    result = result.replace( "{" + matchKey + "}", str(node) )
-        return result
-    else:
-        return "[" + input_string + "]"
-
-
-
-# reads a file at a specified path and exports its contents to json
-# returns json object if successful, None otherwise
-def loadJsonFromFile(file_path):
-    try:
-        with open (file_path, 'r') as in_file:
-            rawStringContents = in_file.read()
-            return json.loads(rawStringContents)
-    except:
-        return None
-
-# writes a file at a specified path filled with supplied json
-# returns true if successful, false otherwise
-def saveJsonToFile(file_path, json_object):
-    try:
-        with open (file_path, 'w') as out_file:
-            # when using json."dump to string", indent=4 specifies tab spacing
-            # this will result in a nicely formatted human readible file
-            rawStringContents = json.dumps(json_object, indent=4)
-            out_file.write(rawStringContents)
-        result = True
-    except:
-        result = False
-    return result
 
 def loadData( game_name ):
     if not os.path.isdir(game_name):
@@ -114,26 +54,9 @@ def loadData( game_name ):
 
     staticData.active_game = game_name
 
-    # Load the config for the active game into staticData
-    config_file_path = os.path.join(staticData.active_game, 'config.json')
-    staticData.config = loadJsonFromFile(config_file_path)
-    if not staticData.config:
-        print("The \"" + game_name + "\" game has broken config data")
-        exit()
-
-    # Load the strings for the active game into staticData
-    strings_file_path = os.path.join(staticData.active_game, 'strings_en.json')
-    staticData.strings = loadJsonFromFile(strings_file_path)
-    if not staticData.strings:
-        print("The \"" + game_name + "\" game has broken strings data")
-        exit()
-
-    # Load the world definition for the active game into staticData
-    world_definition_file_path = os.path.join(staticData.active_game, 'world_definition.json')
-    staticData.world_definition = loadJsonFromFile(world_definition_file_path)
-    if not staticData.world_definition:
-        print("The \"" + game_name + "\" game has broken world_definition data")
-        exit()
+    loadDataElement('config')
+    loadDataElement('strings', '_en')
+    loadDataElement('world_definition')
 
     # Set up the dynamic profile with the supplied default profile in config
     dynamicData.profile = staticData.config["defaultProfile"]
@@ -162,7 +85,7 @@ class sceneSave:
 
     def displayState(self):
         if self.t == 0:
-            print( localize("scene.save.open") )
+            print( loc.translate("scene.save.open") )
         else:
             print(".")        
 
@@ -176,10 +99,10 @@ class sceneSave:
         if self.t > 5:
             # try saving the dynamicData.profile to a save file named for this game
             save_file = staticData.active_game + ".sav"
-            if saveJsonToFile(save_file, dynamicData.profile):
-                dynamicData.system_response = localize("scene.save.success")
+            if io.saveJsonToFile(save_file, dynamicData.profile):
+                dynamicData.system_response = loc.translate("scene.save.success")
             else:
-                dynamicData.system_response = localize("scene.save.failure")
+                dynamicData.system_response = loc.translate("scene.save.failure")
 
             return staticData.config["defaultScene"]
         else:
@@ -199,7 +122,7 @@ class sceneLoad:
 
     def displayState(self):
         if self.t == 0:
-            print( localize("scene.load.open") )
+            print( loc.translate("scene.load.open") )
         else:
             print(".")
 
@@ -214,13 +137,13 @@ class sceneLoad:
             # try loading the dynamicData.profile from a save file named for this game
             # if it fails, the loadJsonFromFile function will return none
             save_file = staticData.active_game + ".sav"
-            load_result = loadJsonFromFile( save_file )
+            load_result = io.loadJsonFromFile( save_file )
             
             if load_result:
                 dynamicData.profile = load_result
-                dynamicData.system_response = localize("scene.load.success")
+                dynamicData.system_response = loc.translate("scene.load.success")
             else:
-                dynamicData.system_response = localize("scene.load.failure")
+                dynamicData.system_response = loc.translate("scene.load.failure")
             return staticData.config["defaultScene"]
 
         else:
@@ -275,14 +198,14 @@ class sceneExplore:
 
         # optionally display the "help" section of the explore info
         if dynamicData.has_seen_menu == False:
-            print(localize("scene.explore.info.help", area))
+            print(loc.translate("scene.explore.info.help", area))
 
         # always display the "general" section of the explore info
-        print(localize("scene.explore.info.general", area))
+        print(loc.translate("scene.explore.info.general", area))
 
 
     def requestInput(self):
-        return input(localize("scene.explore.prompt")).lower()
+        return input(loc.translate("scene.explore.prompt")).lower()
 
     def respondToInput(self,command):
         dynamicData.has_seen_menu = True
@@ -321,6 +244,8 @@ if len(sys.argv) > 1:
 # if no arguments are supplied, default to gary data
 else:
     loadData('gary')
+
+loc.setup( staticData.strings, staticData, dynamicData )
 
 # load the default scene as specified in the game config
 changeScene( staticData.config["defaultScene"] )
