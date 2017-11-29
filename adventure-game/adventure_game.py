@@ -39,9 +39,14 @@ def clear():
         os.system('clear')
 
 # takes an input string and runs it through the staticData strings for replacing
-def localize(input_string):
+def localize(input_string, localData=None):
     if input_string in staticData.strings:
         result = staticData.strings[input_string]
+
+        # if result is not a string, assume its a list of strings and join them into a newline delimited string
+        if not isinstance( result, str ):
+            result = '\n'.join(result)
+
         # Um, regular expressions are a whole mess of bullshit, but this means:
         # "find all things inside {} and give me a list of them"
         substitutions = re.findall('\{([^}]+)\}', result)
@@ -51,10 +56,13 @@ def localize(input_string):
                 replaceKeyComponents = matchKey.split('.')
                 node = None
                 # check if the first key is an attribute of either the staticData or dynamicData classes
-                if hasattr(dynamicData, replaceKeyComponents[0]):
-                    node = getattr(dynamicData, replaceKeyComponents[0])
-                if hasattr(staticData, replaceKeyComponents[0]):
-                    node = getattr(staticData, replaceKeyComponents[0])
+                firstKey = replaceKeyComponents[0]
+                if firstKey in localData:
+                    node = localData[firstKey]
+                elif hasattr(dynamicData, firstKey):
+                    node = getattr(dynamicData, firstKey)
+                elif hasattr(staticData, firstKey):
+                    node = getattr(staticData, firstKey)
 
                 if node:
                     # remove the first item from the list
@@ -109,14 +117,23 @@ def loadData( game_name ):
     # Load the config for the active game into staticData
     config_file_path = os.path.join(staticData.active_game, 'config.json')
     staticData.config = loadJsonFromFile(config_file_path)
+    if not staticData.config:
+        print(game_name + " game has broken config data")
+        exit()
 
     # Load the strings for the active game into staticData
     strings_file_path = os.path.join(staticData.active_game, 'strings_en.json')
     staticData.strings = loadJsonFromFile(strings_file_path)
+    if not staticData.strings:
+        print(game_name + " game has broken strings data")
+        exit()
 
     # Load the world definition for the active game into staticData
     world_definition_file_path = os.path.join(staticData.active_game, 'world_definition.json')
     staticData.world_definition = loadJsonFromFile(world_definition_file_path)
+    if not staticData.world_definition:
+        print("The \"" + game_name + "\" game has broken world_definition data")
+        exit()
 
     # Set up the dynamic profile with the supplied default profile in config
     dynamicData.profile = staticData.config["defaultProfile"]
@@ -254,26 +271,18 @@ class sceneExplore:
         if dynamicData.system_response:
             print(dynamicData.system_response)
         
-        if dynamicData.has_seen_menu == False:
-            print("""~~~~~~~~~~~~ MENU ~~~~~~~~~~~~
-|Hit Enter/Return to play.
-|Enter 'l' to load a past game.
-|Enter 's' to save your current game.
-|Enter 'm' to show this menu again.
-|Enter 'q' to quit without saving.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~""")
-
         area = staticData.world_definition[dynamicData.profile["current_state"]]
-        # This describes where the Hero is currently (the current state)
-        print(area["description"])
-        # This describes the Hero's options (possible state transitions)
-        print("""~~~~~~~~~~~~ MAP ~~~~~~~~~~~~
-From here you can travel to: {}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~""".format(str(area["options"])))
+
+        # optionally display the "help" section of the explore info
+        if dynamicData.has_seen_menu == False:
+            print(localize("scene.explore.info.help", area))
+
+        # always display the "general" section of the explore info
+        print(localize("scene.explore.info.general", area))
 
 
     def requestInput(self):
-        return input("What would you like to do?\n> ").lower()
+        return input(localize("scene.explore.prompt")).lower()
 
     def respondToInput(self,command):
         dynamicData.has_seen_menu = True
