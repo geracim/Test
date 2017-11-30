@@ -1,0 +1,153 @@
+{
+   "wombat" : {
+      "description" : "Not really all that threatening...",
+      "innateStatus" : [ "living", "targetable" ],
+      "startingEquipment" : ["claw", "hide"], 
+      "startingInventory" : {},
+      "skills" : {
+         "yawn" : { "learnedAtLevel" : 3 },
+         "eat" : { "learnedAtLevel" : 40 }
+      },
+      "immunities" : {
+         "fire" : { "l1" : 100, "l99" : 100, "bias" : 0 },
+      },
+      "stats":{
+         "maxHealth": { "l1" : 5, "l99" : 20, "bias" : 0 },
+         "maxMana":   { "l1" : 5, "l99" : 20, "bias" : 0 },
+         "skillRoll": { "l1" : 5, "l99" : 20, "bias" : 0 },
+
+         "strength":  { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "magic":     { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "defend":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "resist":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+
+         "crit":  { "l1" : 0, "l99" : 15, "bias" : 0 },
+         "hit":   { "l1" : 100, "l99" : 120, "bias" : 0 },
+         "evade": { "l1" : 0, "l99" : 0, "bias" : 0 },
+
+         "speed": { "l1" : 100, "l99" : 200, "bias" : 0 }
+      },
+      "experience": { "l1" : 20, "l99" : 1000, "bias" : -500 },
+      "spoils" : {
+         "gold" : { 
+           "amount" : { "l1" : 15, "l99" : 30, "bias" : 0 },
+           "chance" : { "l1" : 100, "l99" : 100, "bias" : 0 } },
+         "trophy" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 5, "l99" : 35, "bias" : 0 } },
+         "meat" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 25, "l99" : 50, "bias" : 0 } }
+      }
+   },
+
+   "platypus" : {
+      "description" : "Has a poisonus barb, unbeknownst to most",
+      "innateStatus" : [ "living", "targetable" ],
+      "startingEquipment" : ["claw", "hide"], 
+      "startingInventory" : {},
+      "skills" : {
+         "poison_sting" : { "learnedAtLevel" : 5 }
+      },
+      "immunities" : {
+         "poison" : { "l1" : 100, "l99" : 100, "bias" : 0 },
+      },
+      "stats":{
+         "maxHealth": { "l1" : 5, "l99" : 20, "bias" : 0 },
+         "maxMana":   { "l1" : 5, "l99" : 20, "bias" : 0 },
+         "skillRoll": { "l1" : 5, "l99" : 20, "bias" : 0 },
+
+         "strength":  { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "magic":     { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "defend":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "resist":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+
+         "crit":  { "l1" : 0, "l99" : 15, "bias" : 0 },
+         "hit":   { "l1" : 100, "l99" : 120, "bias" : 0 },
+         "evade": { "l1" : 0, "l99" : 0, "bias" : 0 },
+
+         "speed": { "l1" : 100, "l99" : 200, "bias" : 0 }
+      },
+      "experience": { "l1" : 20, "l99" : 1000, "bias" : -500 },
+      "spoils" : {
+         "gold" : { 
+           "amount" : { "l1" : 15, "l99" : 30, "bias" : 0 },
+           "chance" : { "l1" : 100, "l99" : 100, "bias" : 0 } },
+         "trophy" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 5, "l99" : 35, "bias" : 0 } },
+         "whiskey" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 15, "l99" : 50, "bias" : 0 } },
+         "lsd" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 15, "l99" : 50, "bias" : 0 } }
+      }
+   },
+
+   "american" : {
+      "description" : "Does not have time for your problems",
+      "innateStatus" : [ "living", "targetable" ],
+      "startingEquipment" : ["gun", "tshirt"], 
+      "startingInventory" : {},
+      "skills" : {},
+      "immunities" : {},
+      "stats":{
+         "maxHealth": { "l1" : 5, "l99" : 20, "bias" : 0 },
+         "maxMana":   { "l1" : 5, "l99" : 20, "bias" : 0 },
+         "skillRoll": { "l1" : 5, "l99" : 20, "bias" : 0 },
+
+         "strength":  { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "magic":     { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "defend":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "resist":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+
+         "crit":  { "l1" : 0, "l99" : 15, "bias" : 0 },
+         "hit":   { "l1" : 100, "l99" : 120, "bias" : 0 },
+         "evade": { "l1" : 0, "l99" : 0, "bias" : 0 },
+
+         "speed": { "l1" : 100, "l99" : 200, "bias" : 0 }
+      },
+      "experience": { "l1" : 20, "l99" : 1000, "bias" : -500 },
+      "spoils" : {
+         "gold" : { 
+           "amount" : { "l1" : 15, "l99" : 30, "bias" : 0 },
+           "chance" : { "l1" : 100, "l99" : 100, "bias" : 0 } },
+         "trophy" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 5, "l99" : 35, "bias" : 0 } },
+         "cuirass" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 5, "l99" : 10, "bias" : 0 } },
+         "robe" : {
+           "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
+           "chance" : { "l1" : 5, "l99" : 10, "bias" : 0 } }
+      }
+   }, 
+
+   "hero" : {
+      "description" : "Simply the best around", 
+      "innateStatus" : [ "living", "targetable" ],
+      "startingEquipment" : ["knife", "tshirt"], 
+      "startingInventory" : { "meat" : 10 , "sword" : 1, "staff" : 1, "gold" : 50 },
+      "skills" : {},
+      "immunities" : {},
+      "stats":{
+         "maxHealth": { "l1" : 20, "l99" : 999, "bias" : 0 },
+         "maxMana":   { "l1" : 20, "l99" : 999, "bias" : 0 },
+         "skillRoll": { "l1" : 5, "l99" : 20, "bias" : 0 },
+
+         "strength":  { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "magic":     { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "defend":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+         "resist":    { "l1" : 100, "l99" : 200, "bias" : 0 },
+
+         "crit":  { "l1" : 0, "l99" : 15, "bias" : 0 },
+         "hit":   { "l1" : 100, "l99" : 120, "bias" : 0 },
+         "evade": { "l1" : 0, "l99" : 0, "bias" : 0 },
+
+         "speed": { "l1" : 100, "l99" : 200, "bias" : 0 }
+      }
+
+   }
+}

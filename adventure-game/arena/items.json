@@ -1,0 +1,163 @@
+{
+   "gold" : {
+      "category" : "currency",
+   },
+
+   "trophy" : {
+      "category" : "quest",
+   },
+
+   "knife" : {
+      "description" : "Increases speed in battle and deals sharp damage",
+      "category" : "backpack",
+      "equipSlot" : ["hand"],
+      "equipClassMask" : [],
+      "equipGrantAbility" : ["fight_knife"],
+
+      "power": [300, 300],
+      "max" : 99,
+      "value" : { "gold" : 200 },
+      "statModifiers" : { "speed": 33 }
+   },
+   "sword" : {
+      "description" : "Requires a skill roll of 2 to use and deals sharp damage",
+      "category" : "backpack",
+      "equipSlot" : ["hand"],
+      "equipClassMask" : [],
+      "equipGrantAbility" : ["fight_sword"],
+
+      "power": [400, 400],
+      "max" : 99,
+      "value" : { "gold" : 200 }
+
+   },
+   "staff" : {
+      "description" : "Deals normal damage, and allows casting of fireballs",
+      "category" : "backpack",
+      "equipSlot" : ["hand"],
+      "equipClassMask" : [],
+      "equipGrantAbility" : ["fight_blunt", "fireball"],
+
+      "power": [200, 200],
+      "max" : 99,
+      "value" : { "gold" : 200 },
+      "statModifiers" : { "defense": 25 }
+   },
+   "gun" : {
+      "description" : "Deals unpredictable normal damage, high speed bonus in battle",
+      "category" : "backpack",
+      "equipSlot" : ["hand"],
+      "equipClassMask" : [],
+      "equipGrantAbility" : ["fight_blunt"],
+
+      "power": [100, 400],
+      "max" : 99,
+      "value" : { "gold" : 200 },
+      "statModifiers" : { "speed": 100 }
+   },
+   "claw" : {
+      "value" : {}
+   },
+
+   "steelHelm" : {
+      "description" : "protects against sharp weapons, weak to fire",
+      "category" : "backpack",
+      "equipSlot" : ["head"],
+      "equipClassMask" : [],
+
+      "protection": 1,
+      "typeEffectiveness": {"sharp": 60, "fire": 125},
+      "suppressEffects" : [],
+      "max" : 99,
+      "value" : { "gold" : 200 }
+   },
+   "tiara" : {
+      "description" : "protects against fire",
+      "category" : "backpack",
+      "equipSlot" : ["head"],
+      "equipClassMask" : [],
+
+      "protection": 0,
+      "typeEffectiveness": {"fire": 50},
+      "suppressEffects" : [],
+      "max" : 99,
+      "value" : { "gold" : 200 }
+   },
+
+   "hide" : {
+      "category" : "backpack",
+      "equipSlot" : ["chest"],
+      "equipClassMask" : [],
+
+      "protection": 0,
+      "typeEffectiveness": {},
+      "suppressEffects" : [],
+      "max" : 99,
+      "value" : {}
+   },
+   "tshirt" : {
+      "description" : "shitty armor",
+      "category" : "backpack",
+      "equipSlot" : ["chest"],
+      "equipClassMask" : [],
+
+      "protection": 1,
+      "typeEffectiveness": {},
+      "suppressEffects" : [],
+      "max" : 99,
+      "value" : { "gold" : 25 }
+   },
+   "cuirass" : {
+      "description" : "protects against sharp weapons, weak to fire",
+      "category" : "backpack",
+      "equipSlot" : ["chest"],
+      "equipClassMask" : [],
+
+      "protection": 3,
+      "typeEffectiveness": {"sharp":60, "fire":125},
+      "suppressEffects" : [],
+      "max" : 99,
+      "value" : { "gold" : 100 }
+   },
+   "robe" : {
+      "description" : "protects against fire",
+      "category" : "backpack",
+      "equipSlot" : ["chest"],
+      "equipClassMask" : [],
+
+      "protection": 1,
+      "typeEffectiveness": {"fire": 50},
+      "suppressEffects" : [],
+      "max" : 99,
+      "value" : { "gold" : 200 }
+   },
+
+   "meat" : {
+      "description" : "restores health in battle",
+      "category" : "backpack",
+      "battleAbility" : "itemSmallHealth",
+
+      "consumable": true,
+      "max" : 99,
+      "value" : { "gold" : 10 }
+   },
+   "lsd" : {
+      "description" : "restores mana in battle",
+      "category" : "backpack",
+      "battleAbility" : "itemSmallMana",
+
+      "consumable": true,
+      "max" : 99,
+      "value" : { "gold" : 10 }
+   },
+   "whisky" :{
+      "description" : "cures status ailments in battle",
+      "category" : "backpack",
+      "battleAbility" : "itemStatusCure",
+
+      "suppressEffects" : ["poison", "paralyze", "sleep"],
+      "consumable": true,
+      "max" : 99,
+      "value" : { "gold" : 10 }
+   }
+}
