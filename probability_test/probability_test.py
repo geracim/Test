@@ -16,6 +16,7 @@ class state:
 	t = 1
 	jsonList = []
 	num_runs = 10000
+	object_weight = 100
 
 def load():
     try:
@@ -28,6 +29,7 @@ def load():
 def run():
 	# load from json file
 	load()
+	
 	return random.randint(0, len(state.jsonList)-1)
 
 	# print a specific thing for debugging
@@ -45,7 +47,6 @@ while state.t < state.num_runs:
 	state.t += 1
 
 print(counts)
-print(100/((state.jsonList[random_choice]["weight"]) * 10))
 
 
 """
