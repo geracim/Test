@@ -215,7 +215,7 @@ The battle system will be activated with two lists of entities called "party", a
 
 ## Item Property Listing
 
-  "description" - text shown when typing "help {itemName}" in the battle selection menu
+* "description" - text shown when typing "help {itemName}" in the battle selection menu
     * probably also in equip screens and shops, if and when we get to that
   "category" - which type of item this is. 
     * The battle system will only surface the existence of items listed in the "battleItemCategory" in battle.json.
