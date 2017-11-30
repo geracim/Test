@@ -56,10 +56,11 @@ The battle system will be activated with two lists of entities called "party", a
 
 ---------------------------------------------------
 
-Effects: (in battle.json)
+# Effects
+   * in battle.json
   An effect is a property that can be applied to an entity on the battlefield.  These effects will be used for all contextual changes in an entities capability and viability.  Some effects will be directly visible and parseable things, like "poison", or "sleep".  Other effects will be used by the low level battle system (for example, all games will need to define some sort of "alive" and "dead" effect that the system will use to determine when battle ends and who wins).  Other effects may be hidden, for example an ability like pokemon's "tail whip" could work by applying a "defenseDown" status to an entity, that could be specified to stack up to 5 times.
 
-(Effect Property Listing)
+## Effect Property Listing 
   "display" (OPTIONAL) - the text that displays next to an entity with this effect.  
     * Not all effects need to have displays, things like "alive" for example can be hidden
   "onPerformApplied" (OPTIONAL) - the performance text displayed by the battle system when this effect is given to someone
@@ -92,10 +93,10 @@ Effects: (in battle.json)
 
 ---------------------------------------------------
 
-Abilities:
+# Abilities
   An ability is a possible action that may be taken during battle by an enemy.  All possible actions will ultimately work via ability.  Abilities may be learned by an entity via leveling up their character class (such as magic spells), be granted by equipping a weapon (such as "fight"), applied by items (i.e. all types of consumable items like potions will reference an ability describing what they do), and more triggers may be introduced by plot/narrative as time goes on.
 
-(Ability Property Listing)
+## Ability Property Listing
   "action" (OPTIONAL) - what to type in the player ability phase to use this.  
     * dot delimited chains can be used to construct sub-menus
   "description" - what is displayed if the user types "help" and then the action
@@ -155,10 +156,10 @@ Abilities:
 
 ---------------------------------------------------
 
-Classes:
+# Classes
   A class defines a type of entity - used both for enemy types and defining the player's party members.
 
-(Class Property Listing)
+## Class Property Listing
   "description" - help text for the class
     * displayed when typing "help {enemyName}" or "help {partyMemberName}" on the battlefield action selection phase
   "innateStatus" (OPTIONAL) - status effects that will be present when this entity starts battle.
@@ -209,10 +210,10 @@ Classes:
 
 ---------------------------------------------------
 
-Items:
+# Items
   items constitute and shared collectable anythings in the party.  These need not necessarily be true "items".  Some may be consumable items or equippable things.  Others may be quest specific items,  Currency and achievements can also be represented by the item system, and placed in categories that keep them out of the "usable" inventory.  Similarly, "hidden" item categories could be a general purpose way to track non-linear player progress.  For example, a side quest could give a player a secret "complimentedMedusasHair" item or something that might inject some fluffy bullshit into the game's ending sequence.
 
-(Item Property Listing)
+## Item Property Listing
 
   "description" - text shown when typing "help {itemName}" in the battle selection menu
     * probably also in equip screens and shops, if and when we get to that
