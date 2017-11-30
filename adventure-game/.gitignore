@@ -5,4 +5,8 @@
 # OS generated files #
 ######################
 .DS_Store
-.DS_Store?
+.DS_Store
+
+# Python cache #
+################
+engine/__pycache__
