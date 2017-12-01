@@ -1,0 +1,93 @@
+{
+   "fight_blunt" : {
+      "action" : "fight",
+      "description" : "attacks with weapon",
+      "type" : "normal", "power" : [1, 1],
+      "effectMask" : [ "living" ],
+      "group" : "enemy", "target" : "single",
+      "strikeWith" : ["WEAPONADVANTAGE", "strength"], "strikeAgainst" : ["defend"],
+      "canEvade" : true, "critPercent" : 250
+   },
+   "fight_knife" : {
+      "action" : "fight",
+      "description" : "attacks with weapon",
+      "type" : "sharp", "power" : [1, 1],
+      "effectMask" : [ "living" ],
+      "group" : "enemy", "target" : "single",
+      "strikeWith" : ["WEAPONADVANTAGE", "strength"], "strikeAgainst" : ["defend"],
+      "canEvade" : true, "critPercent" : 250
+   },
+   "fight_sword" : {
+      "action" : "fight",
+      "description" : "attacks with weapon",
+      "skillPointCost" : 3,
+      "type" : "sharp", "power" : [1, 1],
+      "effectMask" : [ "living" ],
+      "group" : "enemy", "target" : "single",
+      "strikeWith" : ["WEAPONADVANTAGE", "strength"], "strikeAgainst" : ["defend"],
+      "canEvade" : true, "critPercent" : 250
+   },
+   "poison_sting" : {
+      "action" : "fight",
+      "description" : "attacks with barb, chance to poison",
+      "skillPointCost" : 4,
+      "type" : "sharp", "power" : [2, 2],
+      "effectMask" : [ "living" ],
+      "group" : "enemy", "target" : "single",
+      "strikeWith" : ["strength"], "strikeAgainst" : ["defend"],
+      "canEvade" : true, "critPercent" : 250,
+      "targetEffects": {
+         "poison" : { "hit" : 50 }
+      }
+   },
+   "yawn" : {
+      "action" : "skill.yawn",
+      "description" : "puts enemies to sleep",
+      "manaCost" : 3,
+      "type" : "normal",
+      "effectMask" : [ "living" ],
+      "group" : "enemy", "target" : "all",
+      "canEvade" : false,
+      "targetEffects": {
+         "sleep" : { "hit" : 100 }
+      }
+   },
+   "eat" : {
+      "action" : "skill.eat",
+      "description" : "one hit KO, low accuracy",
+      "manaCost" : 3,
+      "type" : "normal",
+      "effectMask" : [ "living" ],
+      "group" : "enemy", "target" : "single",
+      "canEvade" : true,
+      "targetEffects": {
+         "death" : { "hit" : 35 }
+      }
+   },
+   "fireball" : {
+      "action" : "magic",
+      "description" : "strikes with fire damage",
+      "charges" : 25,
+      "type": "fire", "power" : [3, 3],
+      "effectMask" : [ "living" ],
+      "group" : "enemy", "target" : "distributable",
+      "strikeWith" : ["TYPEADVANTAGE", "magic"], "strikeAgainst" : ["resist"],
+      "canEvade" : true
+   },
+   "itemSmallHealth" : {
+      "type": "normal", "power" : [-15, -15],
+      "group" : "party", "target" : "single",
+      "effectMask" : [ "living" ]
+   },
+   "itemSmallMana" : {
+      "type": "normal",
+      "manaCost": -10,
+      "group" : "party", "target" : "single",
+      "effectMask" : [ "living" ]
+   },
+   "itemNothing" : {
+      "type": "normal",
+      "group" : "party", "target" : "single",
+      "effectMask" : [ "living" ]
+   }
+}

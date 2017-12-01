@@ -1,0 +1,28 @@
+{
+	"userModel" : {
+		"intelligence" : 100,
+		"winning" : 100,
+		"assassin" : 100,
+		"healer" : 100,
+		"survivor" : 100,
+		"strategist" : 100
+	},
+	"chaotic" : {
+		"intelligence" : 0
+	},
+	"low" : {
+		"intelligence" : 45,
+		"harming" : 33,
+		"survivor" : 50
+	},
+	"med" : {
+		"intelligence" : 66,
+		"winning" : 50,
+		"survivor" : 50,
+		"healer" : 25
+	},
+	"high" : {
+		"intelligence" : 100,
+		"strategist" : 100
+	}
+}

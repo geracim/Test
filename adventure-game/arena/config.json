@@ -1,7 +1,7 @@
 {
-   "defaultScene" : "explore",
+    "defaultScene" : "explore",
     
-  	"defaultProfile" : {
+    "defaultProfile" : {
       "current_state": "arena",
       "current_enemy_type": "",
       "current_enemy_level": 0
@@ -11,5 +11,7 @@
       "hand" : { "display" : "player.equip.hand" },
       "head" : { "display" : "player.equip.head" },
       "chest" : { "display" : "player.equip.chest" } 
-   }
+   },
+   
+   "useBattleSystem" : true
 }

@@ -1,0 +1,33 @@
+{
+  "targetable" : {
+  },
+  "living" : {
+	 "visibility" : [ "party", "enemy" ]
+  },
+  "poison" : {
+	 "display": "poison",
+	 "onPerformApply": "{entity} was poisoned",
+	 "stack" : 3,
+	 "healthPerTurn" : { "points" : 0, "percent" : -10 }
+  },
+  "sleep" : {
+	 "display": "sleep",
+	 "onPerformApply": "{entity} fell asleep",
+	 "duration" : [3, 5],
+	 "actionBlock" : ["fight", "skill"], 
+	 "interrupt" : "DAMAGE"
+  },
+  "paralyze" : {
+	 "display": "paralyze", 
+	 "onPerformApply": "battle.apply.paralyze", 
+	 "duration" : [2, 4], 
+	 "actionBlock" : ["fight", "skill"]
+  },
+  "dead" : { 
+	 "display": "dead",
+	 "onPerformApply": "{entity} was killed", 
+	 "actionBlock" : ["ALL"],
+	 "suppressEffects" : ["ALL"],
+	 "visibility": [ "party" ]
+  }
+}

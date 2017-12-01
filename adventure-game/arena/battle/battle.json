@@ -1,0 +1,10 @@
+{
+   "expToLevelUp" : { "l1" : 120, "l99" : 200000, "bias" : 120000 },
+   
+   "applyWhenHealthExhausted" : "dead",
+   "teamLosesWithoutAnyone" : "living",
+   "gainExperienceIf" : "living",
+   "spoilsAwardedFor" : "dead",
+   "battleItemCategory" : "backpack",
+   "canSkipTurnInBattle" : false
+}

@@ -5,8 +5,8 @@
       "startingEquipment" : ["claw", "hide"], 
       "startingInventory" : {},
       "skills" : {
-         "yawn" : { "learnedAtLevel" : 3 },
-         "eat" : { "learnedAtLevel" : 40 }
+         "yawn" : { "level" : 3 },
+         "eat" : { "level" : 40 }
       },
       "immunities" : {
          "fire" : { "l1" : 100, "l99" : 100, "bias" : 0 },
@@ -38,7 +38,8 @@
          "meat" : {
            "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
            "chance" : { "l1" : 25, "l99" : 50, "bias" : 0 } }
-      }
+      },
+	  "ai": "low"
    },
 
    "platypus" : {
@@ -47,7 +48,7 @@
       "startingEquipment" : ["claw", "hide"], 
       "startingInventory" : {},
       "skills" : {
-         "poison_sting" : { "learnedAtLevel" : 5 }
+         "poison_sting" : { "level" : 5 }
       },
       "immunities" : {
          "poison" : { "l1" : 100, "l99" : 100, "bias" : 0 },
@@ -82,7 +83,8 @@
          "lsd" : {
            "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
            "chance" : { "l1" : 15, "l99" : 50, "bias" : 0 } }
-      }
+      },
+	  "ai": "med"
    },
 
    "american" : {
@@ -122,7 +124,8 @@
          "robe" : {
            "amount" : { "l1" : 1, "l99" : 1, "bias" : 0 },
            "chance" : { "l1" : 5, "l99" : 10, "bias" : 0 } }
-      }
+      },
+	  "ai": "low"
    }, 
 
    "hero" : {
@@ -147,7 +150,7 @@
          "evade": { "l1" : 0, "l99" : 0, "bias" : 0 },
 
          "speed": { "l1" : 100, "l99" : 200, "bias" : 0 }
-      }
-
+      },
+	  "ai": "userModel"
    }
 }

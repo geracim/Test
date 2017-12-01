@@ -1,9 +1,11 @@
 {
     "defaultScene" : "explore",
     
-  	"defaultProfile" : {
+    "defaultProfile" : {
       "current_state": "cambria",
       "current_enemy_type": "",
       "current_enemy_level": 0
-    }
+    },
+   
+   "useBattleSystem" : false
 }
