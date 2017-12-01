@@ -1,5 +1,4 @@
 import random
-import time
 
 def game():
 	secret_num = random.randint(1, 10)
