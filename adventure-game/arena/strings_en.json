@@ -7,7 +7,6 @@
    "scene.load.success" : "game loaded",
    "scene.load.failure" : "game load error",
 
-   "scene.explore.info.help" : "q=quit, m=help, s=save, l=load",
    "scene.explore.info.general" : [
       "{description}",
       "[ OPTIONS ]",

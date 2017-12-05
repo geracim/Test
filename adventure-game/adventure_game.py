@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import copy
 import os
 import random
 import sys
@@ -7,230 +8,228 @@ import time
 
 from engine import io, loc
 
+import tkinter as tk
+from tkinter import ttk
+
 ##########################################################################################
 #################################### Model & Data ########################################
 ##########################################################################################
 
 class dynamicData:
-    profile = {}
-    has_seen_menu = False
-    system_response = None
-    current_scene = None
-    play = True
+	profile = {}
+	system_response = None
+	play = True
 
 
 ##########################################################################################
 
 class staticData:
-    active_game = None
-    config = {}
-    world_definition = {}
-    strings = {}
-    sceneFactory = {}
+	active_game = None
+	config = {}
+	world_definition = {}
+	strings = {}
+	sceneFactory = {}
 
 ##########################################################################################
-######################################Utility Functions###################################
-##########################################################################################
 
-def clear():
-    if os.name == 'nt':
-        os.system('cls')
-    else:
-        os.system('clear')
+class adventureGameApp(tk.Tk):
+	current_scene = None
+	def __init__(self, *args, **kwargs):
+		tk.Tk.__init__(self, *args, **kwargs)
 
-def loadDataElement( element, file_extra_tag="" ):
-    config_file_path = os.path.join(staticData.active_game, element + file_extra_tag + '.json')
-    data = io.loadJsonFromFile(config_file_path)
-    if not data:
-        print("The \"" + staticData.active_game + "\" game has broken " + element + " data")
-        exit()
-    setattr(staticData, element, data)
+	def changeScene(self, new_scene_id):
+		if self.current_scene != None:
+			self.current_scene.onClose()
+		# get the scene factory for the specified id, and call it to create a new scene
+		self.current_scene = staticData.sceneFactory[new_scene_id]()
+		self.current_scene.onOpen(self)
 
+	def clear(self):
+		for widget in self.pack_slaves():
+			widget.destroy()
+	
+	def rebuildBasicUi(self, displayText, userOptions):
+		self.clear()
+		
+		txtFrame = ttk.Frame(self, width=600, height=300).pack()
+		ttk.Label(txtFrame, text=displayText).pack()
+		
+		btnFrame = ttk.Frame(self, width=600).pack()
+		for commandKey in userOptions:
+			button = ttk.Button(
+				btnFrame,
+				text=userOptions[commandKey],
+				command=lambda i=commandKey: self.current_scene.onSelect(i))
+			button.pack(side=tk.LEFT)
 
-def loadData( game_name ):
-    if not os.path.isdir(game_name):
-        print("Could not find a game with the name: " + game_name)
-        exit()
+	def loadDataElement(self, element, file_extra_tag=""):
+		config_file_path = os.path.join(staticData.active_game, element + file_extra_tag + '.json')
+		data = io.loadJsonFromFile(config_file_path)
+		if not data:
+			print("The \"" + staticData.active_game + "\" game has broken " + element + " data")
+			exit()
+		setattr(staticData, element, data)
 
-    staticData.active_game = game_name
+	def loadData(self, game_name):
+		if not os.path.isdir(game_name):
+			print("Could not find a game with the name: " + game_name)
+			exit()
 
-    loadDataElement('config')
-    loadDataElement('strings', '_en')
-    loadDataElement('world_definition')
+		staticData.active_game = game_name
 
-    # Set up the dynamic profile with the supplied default profile in config
-    dynamicData.profile = staticData.config["defaultProfile"]
+		self.loadDataElement('config')
+		self.loadDataElement('strings', '_en')
+		self.loadDataElement('world_definition')
 
-def changeScene( new_scene_id ):
-    # get the scene factory for the specified id, and call it to create a new scene
-    newScene = staticData.sceneFactory[new_scene_id]()
+		# Set up the dynamic profile with the supplied default profile in config
+		dynamicData.profile = staticData.config["defaultProfile"]
 
-    if dynamicData.current_scene != None:
-        dynamicData.current_scene.onClose()
-    dynamicData.current_scene = newScene
-    dynamicData.current_scene.onOpen()
+		# Load localization data
+		loc.setup( staticData.strings, staticData, dynamicData )
 
 ##########################################################################################
 ########################################Scenes############################################
 ##########################################################################################
 
 class sceneSave:
-    t = 0
+	def onOpen(self, game):
+		self.game = game
 
-    def onOpen(self):
-        pass
+		self.game.clear()
+		ttk.Label(text=loc.translate("scene.save.open")).pack()
+		self.progressBar = ttk.Progressbar(
+			self.game, orient="horizontal",
+			length=400, mode="determinate")
+		self.progressBar.pack()
+		self.progressBar["value"] = 0
+		self.progressBar["maximum"] = 100
+		
+		self.updateProgressBar()
 
-    def onClose(self):
-        pass
+	def onClose(self):
+		pass
 
-    def displayState(self):
-        if self.t == 0:
-            print( loc.translate("scene.save.open") )
-        else:
-            print(".")        
-
-    def requestInput(self):
-        framerate = 3.0
-        time.sleep(1 / framerate)
-        return None
-
-    def respondToInput(self,command):
-        self.t += 1
-        if self.t > 5:
-            # try saving the dynamicData.profile to a save file named for this game
-            save_file = staticData.active_game + ".sav"
-            if io.saveJsonToFile(save_file, dynamicData.profile):
-                dynamicData.system_response = loc.translate("scene.save.success")
-            else:
-                dynamicData.system_response = loc.translate("scene.save.failure")
-
-            return staticData.config["defaultScene"]
-        else:
-            return None
+	def updateProgressBar(self):
+		if self.progressBar["value"] < self.progressBar["maximum"]:
+			self.progressBar["value"] += 5
+			self.game.after(50, self.updateProgressBar)
+		else:
+			# try saving the dynamicData.profile to a save file named for this game
+			save_file = staticData.active_game + ".sav"
+			if io.saveJsonToFile(save_file, dynamicData.profile):
+				dynamicData.system_response = loc.translate("scene.save.success")
+			else:
+				dynamicData.system_response = loc.translate("scene.save.failure")
+			self.game.changeScene(staticData.config["defaultScene"])
 
 staticData.sceneFactory['save'] = lambda: sceneSave()
 
 ##########################################################################################
 class sceneLoad:
-    t = 0
+	def onOpen(self, game):
+		self.game = game
 
-    def onOpen(self):
-        pass
+		self.game.clear()
+		ttk.Label(text=loc.translate("scene.load.open")).pack()
+		self.progressBar = ttk.Progressbar(
+			self.game, orient="horizontal",
+			length=400, mode="determinate")
+		self.progressBar.pack()
+		self.progressBar["value"] = 0
+		self.progressBar["maximum"] = 100
 
-    def onClose(self):
-        pass
+		self.updateProgressBar()
 
-    def displayState(self):
-        if self.t == 0:
-            print( loc.translate("scene.load.open") )
-        else:
-            print(".")
+	def onClose(self):
+		pass
 
-    def requestInput(self):
-        framerate = 3.0
-        time.sleep(1 / framerate)
-        return None
-
-    def respondToInput(self,command):
-        self.t += 1
-        if self.t > 5:
-            # try loading the dynamicData.profile from a save file named for this game
-            # if it fails, the loadJsonFromFile function will return none
-            save_file = staticData.active_game + ".sav"
-            load_result = io.loadJsonFromFile( save_file )
-            
-            if load_result:
-                dynamicData.profile = load_result
-                dynamicData.system_response = loc.translate("scene.load.success")
-            else:
-                dynamicData.system_response = loc.translate("scene.load.failure")
-            return staticData.config["defaultScene"]
-
-        else:
-            return None
+	def updateProgressBar(self):
+		if self.progressBar["value"] < self.progressBar["maximum"]:
+			self.progressBar["value"] += 5
+			self.game.after(50, self.updateProgressBar)
+		else:
+			# try loading the dynamicData.profile from a save file named for this game
+			# if it fails, the loadJsonFromFile function will return none
+			save_file = staticData.active_game + ".sav"
+			load_result = io.loadJsonFromFile( save_file )
+			
+			if load_result:
+				dynamicData.profile = load_result
+				dynamicData.system_response = loc.translate("scene.load.success")
+			else:
+				dynamicData.system_response = loc.translate("scene.load.failure")
+			self.game.changeScene(staticData.config["defaultScene"])
 
 staticData.sceneFactory['load'] = lambda: sceneLoad()
 
 ##########################################################################################
 class sceneEncounter:
-    actions = [ "win", "lose" ]
+	def onOpen(self, game):
+		self.game = game
+		self.ui()
 
-    def onOpen(self):
-        pass
+	def onClose(self):
+		pass
 
-    def onClose(self):
-        pass
+	def ui(self):
+		display_text = "You are being attacked by a " + dynamicData.profile["current_enemy_type"]
+		user_options = { 'w': 'Win', 'l': 'Lose' }
+		self.game.rebuildBasicUi(display_text, user_options)
 
-    def displayState(self):
-        print("You are being attacked by a " + dynamicData.profile["current_enemy_type"])
-        print("your choices: " + str(self.actions) )
-
-    def requestInput(self):
-        return input("What would you like to do?\n> ")
-
-    def respondToInput(self,command):
-        if command == 'win':
-            dynamicData.system_response = "You survived."
-            return 'explore'
-        elif command == "lose":
-            dynamicData.system_response = "You died."
-            return 'load'
-
-        return None
+	def onSelect(self, selection):
+		if selection == 'w':
+			dynamicData.system_response = "You survived."
+			self.game.changeScene('explore')
+		elif selection == 'l':
+			dynamicData.system_response = "You died."
+			self.game.changeScene('load')
 
 staticData.sceneFactory['encounter'] = lambda: sceneEncounter()
 
 ##########################################################################################
 class sceneExplore:
+	def onOpen(self, game):
+		self.game = game
+		self.ui()
 
-    def onOpen(self):
-        pass
+	def onClose(self):
+		pass
 
-    def onClose(self):
-        pass
+	def ui(self):
+		display_text = ""
+		if dynamicData.system_response:
+			display_text += dynamicData.system_response + "\n"
+		
+		area = staticData.world_definition[dynamicData.profile["current_state"]]
+		
+		# always display the "general" section of the explore info
+		display_text += loc.translate("scene.explore.info.general", area)
 
-    def displayState(self):
-        clear()
-        if dynamicData.system_response:
-            print(dynamicData.system_response)
-        
-        area = staticData.world_definition[dynamicData.profile["current_state"]]
+		user_options = {"q": "Quit", "l": "Load", "s": "Save"}
+		for command in area["options"]:
+			user_options[command] = command
+		self.game.rebuildBasicUi(display_text, user_options)
 
-        # optionally display the "help" section of the explore info
-        if dynamicData.has_seen_menu == False:
-            print(loc.translate("scene.explore.info.help", area))
-
-        # always display the "general" section of the explore info
-        print(loc.translate("scene.explore.info.general", area))
-
-
-    def requestInput(self):
-        return input(loc.translate("scene.explore.prompt")).lower()
-
-    def respondToInput(self,command):
-        dynamicData.has_seen_menu = True
-        dynamicData.system_response = None
-        area = staticData.world_definition[dynamicData.profile["current_state"]]
-
-        if command == 'l':
-            return 'load'
-        elif command == 's':
-            return 'save'
-        elif command == 'q':
-            dynamicData.play = False
-        elif command == 'm':
-            dynamicData.has_seen_menu = False
-        elif command in area["options"]:
-            dynamicData.profile["current_state"] = command
-            destination = staticData.world_definition[command]
-            if random.randint(1, 100) < destination["encounter_rate"]:
-                enemyTypeIndex = random.randint(0, len(destination["enemy_types"])-1)
-                enemyType = destination["enemy_types"][enemyTypeIndex]
-                dynamicData.profile["current_enemy_type"] = enemyType["id"]
-                dynamicData.profile["current_enemy_level"] = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
-                return 'encounter'
-
-        return None
+	def onSelect(self, selection):
+		area = staticData.world_definition[dynamicData.profile["current_state"]]
+		if selection == 'l':
+			self.game.changeScene('load')
+		elif selection == 's':
+			self.game.changeScene('save')
+		elif selection == 'q':
+			self.game.destroy()
+		else:
+			if selection in area["options"]:
+				dynamicData.profile["current_state"] = selection
+				area = staticData.world_definition[selection]
+				if random.randint(1, 100) < area["encounter_rate"]:
+					enemyTypeIndex = random.randint(0, len(area["enemy_types"])-1)
+					enemyType = area["enemy_types"][enemyTypeIndex]
+					dynamicData.profile["current_enemy_type"] = enemyType["id"]
+					dynamicData.profile["current_enemy_level"] = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
+					self.game.changeScene('encounter')
+				else:
+					self.ui()
 
 staticData.sceneFactory['explore'] = lambda: sceneExplore()
 
@@ -238,26 +237,18 @@ staticData.sceneFactory['explore'] = lambda: sceneExplore()
 #######################################Core loop##########################################
 ##########################################################################################
 
-# if the script was run with a command line argument, load that game
-if len(sys.argv) > 1:
-    loadData(sys.argv[1])
-# if no arguments are supplied, default to gary data
-else:
-    loadData('gary')
+if __name__ == "__main__":
+	app = adventureGameApp()
+	
+	# if the script was run with a command line argument, load that game
+	if len(sys.argv) > 1:
+		app.loadData(sys.argv[1])
+	# if no arguments are supplied, default to gary data
+	else:
+		app.loadData('gary')
 
-loc.setup( staticData.strings, staticData, dynamicData )
+	# load the default scene as specified in the game config
+	app.changeScene( staticData.config["defaultScene"] )
 
-# load the default scene as specified in the game config
-changeScene( staticData.config["defaultScene"] )
-
-# main loop
-while dynamicData.play == True:
-    dynamicData.current_scene.displayState()
-    command = dynamicData.current_scene.requestInput()
-    newScene = dynamicData.current_scene.respondToInput(command)
-    if newScene:
-        changeScene( newScene )
-
-
-
-
+	# start game core
+	app.mainloop()

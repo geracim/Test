@@ -29,7 +29,7 @@ def translate( input_string, local_data=None ):
                 node = None
                 # check if the first key is an attribute of either the staticData or dynamicData classes
                 firstKey = replaceKeyComponents[0]
-                if firstKey in local_data:
+                if local_data and firstKey in local_data:
                     node = local_data[firstKey]
                 elif hasattr(dictionary.dynamic, firstKey):
                     node = getattr(dictionary.dynamic, firstKey)
