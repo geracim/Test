@@ -2,11 +2,10 @@
 
 import copy
 import os
-import random
 import sys
 import time
-
-from engine import io, loc, animation, instance
+import random
+from engine import io, loc, animation, instance, game
 
 import tkinter as tk
 from tkinter import ttk
@@ -17,8 +16,6 @@ from tkinter import ttk
 
 class dynamicData:
 	profile = {}
-	system_response = None
-	play = True
 
 ##########################################################################################
 
@@ -31,53 +28,10 @@ class staticData:
 
 ##########################################################################################
 
-class adventureGameApp(tk.Tk):
-	scene_stack = []
-	def __init__(self, *args, **kwargs):
-		tk.Tk.__init__(self, *args, **kwargs)
-
-	def getTopScene(self):
-		if len(self.scene_stack) > 0:
-			return self.scene_stack[-1]
-		else:
-			return None
-
-	def pushScene(self, scene_type_id):
-		new_scene = staticData.sceneFactory[scene_type_id]()
-		self.scene_stack.append(new_scene)
-		new_scene.onOpen(self)
-
-	def popScene(self):
-		if len(self.scene_stack) > 0:
-			self.getTopScene().onClose()
-			self.scene_stack = self.scene_stack[:-1]
-			if len(self.scene_stack) > 0:
-				ui_update_call = getattr(self.getTopScene(), "ui", None)
-				if ui_update_call is not None:
-					self.getTopScene().ui()
-		else:
-			raise "ERROR: Attempt to pop with no scenes"
-
-	def clearSceneStack(self):
-		while len(self.scene_stack):
-			self.popScene()
-
-	def resetSceneStack(self):
-		self.clearSceneStack()
-		self.pushScene(staticData.config["defaultScene"])
-
-	def clear(self):
-		for widget in self.pack_slaves():
-			widget.destroy()
+class adventureGameApp(game.gameBase):
 	
-	def flushSystemResponseAndAppend(self, text):
-		result = ""
-		if dynamicData.system_response:
-			result += dynamicData.system_response + "\n"
-			dynamicData.system_response = ""
-
-		result += text
-		return result
+	def __init__(self):
+		game.gameBase.__init__(self, staticData, io)
 
 	def rebuildBasicUi(self, displayText, userOptions):
 		self.clear()
@@ -93,30 +47,22 @@ class adventureGameApp(tk.Tk):
 				command=lambda i=commandKey: self.getTopScene().onSelect(i))
 			button.pack(side=tk.LEFT)
 
-	def loadDataElement(self, element, file_extra_tag=""):
-		config_file_path = os.path.join(staticData.active_game, element + file_extra_tag + '.json')
-		data = io.loadJsonFromFile(config_file_path)
-		if not data:
-			print("The \"" + staticData.active_game + "\" game has broken " + element + " data")
-			exit()
-		setattr(staticData, element, data)
-
 	def loadData(self, game_name):
 		if not os.path.isdir(game_name):
 			print("Could not find a game with the name: " + game_name)
 			exit()
 
-		staticData.active_game = game_name
+		self.static_data.active_game = game_name
 
 		self.loadDataElement('config')
 		self.loadDataElement('strings', '_en')
 		self.loadDataElement('world_definition')
 
 		# Set up the dynamic profile with the supplied default profile in config
-		dynamicData.profile = staticData.config["defaultProfile"]
+		dynamicData.profile = self.static_data.config["defaultProfile"]
 
 		# Load localization data
-		loc.setup( staticData.strings, staticData, dynamicData )
+		loc.setup( self.static_data.strings, self.static_data, dynamicData )
 
 ##########################################################################################
 ########################################Scenes############################################
@@ -130,9 +76,9 @@ class sceneSave(animation.sceneAnimatingProgressBar):
 	    # try saving the dynamicData.profile to a save file named for this game
 	    save_file = staticData.active_game + ".sav"
 	    if io.saveJsonToFile(save_file, dynamicData.profile):
-	        dynamicData.system_response = loc.translate("scene.save.success")
+	        self.game.system_response = loc.translate("scene.save.success")
 	    else:
-	        dynamicData.system_response = loc.translate("scene.save.failure")
+	        self.game.system_response = loc.translate("scene.save.failure")
 
 staticData.sceneFactory['save'] = lambda: sceneSave()
 
@@ -149,9 +95,9 @@ class sceneLoad(animation.sceneAnimatingProgressBar):
 		
 		if load_result:
 			dynamicData.profile = load_result
-			dynamicData.system_response = loc.translate("scene.load.success")
+			self.game.system_response = loc.translate("scene.load.success")
 		else:
-			dynamicData.system_response = loc.translate("scene.load.failure")
+			self.game.system_response = loc.translate("scene.load.failure")
 
 staticData.sceneFactory['load'] = lambda: sceneLoad()
 
@@ -162,24 +108,23 @@ class sceneEncounter:
 		area = staticData.world_definition[dynamicData.profile["current_state"]]
 		enemyTypeIndex = random.randint(0, len(area["enemy_types"])-1)
 		enemyType = area["enemy_types"][enemyTypeIndex]
-		dynamicData.profile["current_enemy_type"] = enemyType["id"]
-		dynamicData.profile["current_enemy_level"] = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
+		self.current_enemy_type = enemyType["id"]
 		self.ui()
 
 	def onClose(self):
 		pass
 
 	def ui(self):
-		display_text = "You are being attacked by a " + dynamicData.profile["current_enemy_type"]
+		display_text = "You are being attacked by a " + self.current_enemy_type
 		user_options = { 'w': 'Win', 'l': 'Lose' }
 		self.game.rebuildBasicUi(display_text, user_options)
 
 	def onSelect(self, selection):
 		if selection == 'w':
-			dynamicData.system_response = "You survived."
+			self.game.system_response = "You survived."
 			self.game.popScene()
 		elif selection == 'l':
-			dynamicData.system_response = "You died."
+			self.game.system_response = "You died."
 			self.game.resetSceneStack()
 			self.game.pushScene('load')
 
