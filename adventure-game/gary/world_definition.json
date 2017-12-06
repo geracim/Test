@@ -118,7 +118,7 @@
 	"tavern" : { 
   		"description" : "The hero enters the tavern.", 
   		"options" : ["cambria"],
-  		"enemy_types" : {
+  		"encounter_types" : {
   			"rat": 1,
   			"drunkard": 1
 			},
