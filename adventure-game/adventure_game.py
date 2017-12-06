@@ -6,7 +6,7 @@ import random
 import sys
 import time
 
-from engine import io, loc
+from engine import io, loc, animation
 
 import tkinter as tk
 from tkinter import ttk
@@ -90,74 +90,38 @@ class adventureGameApp(tk.Tk):
 ########################################Scenes############################################
 ##########################################################################################
 
-class sceneSave:
-	def onOpen(self, game):
-		self.game = game
+class sceneSave(animation.sceneAnimatingProgressBar):
+	def generatePromptText(self):
+	    return loc.translate("scene.save.open")
 
-		self.game.clear()
-		ttk.Label(text=loc.translate("scene.save.open")).pack()
-		self.progressBar = ttk.Progressbar(
-			self.game, orient="horizontal",
-			length=400, mode="determinate")
-		self.progressBar.pack()
-		self.progressBar["value"] = 0
-		self.progressBar["maximum"] = 100
-		
-		self.updateProgressBar()
-
-	def onClose(self):
-		pass
-
-	def updateProgressBar(self):
-		if self.progressBar["value"] < self.progressBar["maximum"]:
-			self.progressBar["value"] += 5
-			self.game.after(50, self.updateProgressBar)
-		else:
-			# try saving the dynamicData.profile to a save file named for this game
-			save_file = staticData.active_game + ".sav"
-			if io.saveJsonToFile(save_file, dynamicData.profile):
-				dynamicData.system_response = loc.translate("scene.save.success")
-			else:
-				dynamicData.system_response = loc.translate("scene.save.failure")
-			self.game.changeScene(staticData.config["defaultScene"])
+	def onFinishedAnimation(self):
+	    # try saving the dynamicData.profile to a save file named for this game
+	    save_file = staticData.active_game + ".sav"
+	    if io.saveJsonToFile(save_file, dynamicData.profile):
+	        dynamicData.system_response = loc.translate("scene.save.success")
+	    else:
+	        dynamicData.system_response = loc.translate("scene.save.failure")
+	    self.game.changeScene(staticData.config["defaultScene"])
 
 staticData.sceneFactory['save'] = lambda: sceneSave()
 
 ##########################################################################################
-class sceneLoad:
-	def onOpen(self, game):
-		self.game = game
+class sceneLoad(animation.sceneAnimatingProgressBar):
+	def generatePromptText(self):
+	    return loc.translate("scene.load.open")
 
-		self.game.clear()
-		ttk.Label(text=loc.translate("scene.load.open")).pack()
-		self.progressBar = ttk.Progressbar(
-			self.game, orient="horizontal",
-			length=400, mode="determinate")
-		self.progressBar.pack()
-		self.progressBar["value"] = 0
-		self.progressBar["maximum"] = 100
-
-		self.updateProgressBar()
-
-	def onClose(self):
-		pass
-
-	def updateProgressBar(self):
-		if self.progressBar["value"] < self.progressBar["maximum"]:
-			self.progressBar["value"] += 5
-			self.game.after(50, self.updateProgressBar)
+	def onFinishedAnimation(self):
+		# try loading the dynamicData.profile from a save file named for this game
+		# if it fails, the loadJsonFromFile function will return none
+		save_file = staticData.active_game + ".sav"
+		load_result = io.loadJsonFromFile( save_file )
+		
+		if load_result:
+			dynamicData.profile = load_result
+			dynamicData.system_response = loc.translate("scene.load.success")
 		else:
-			# try loading the dynamicData.profile from a save file named for this game
-			# if it fails, the loadJsonFromFile function will return none
-			save_file = staticData.active_game + ".sav"
-			load_result = io.loadJsonFromFile( save_file )
-			
-			if load_result:
-				dynamicData.profile = load_result
-				dynamicData.system_response = loc.translate("scene.load.success")
-			else:
-				dynamicData.system_response = loc.translate("scene.load.failure")
-			self.game.changeScene(staticData.config["defaultScene"])
+			dynamicData.system_response = loc.translate("scene.load.failure")
+		self.game.changeScene(staticData.config["defaultScene"])
 
 staticData.sceneFactory['load'] = lambda: sceneLoad()
 
