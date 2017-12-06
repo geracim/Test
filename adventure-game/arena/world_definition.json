@@ -1,21 +1,23 @@
 {
   "arena" : { 
     "description" : "You stand in a massive arena currently deviod of any and all choice",
-    "options" : [],
+    "travel" : [],
     "encounter_types" : {},
     "encounter_rate" : 0,
     "npc" : [],
     "npc_options" : [],
     "instances" : {
       "Gold Statue" : {
-        "mode" : "selectable",
+        "canSelectDirectly": false,
+        "exploreWeight": 1,
         "nodes" : [
             { "type" : "Display", "text" : "You find a really boring statue that does nothing"},
             { "type" : "Choice", "options": { "Ignore it" : {} } }
         ]
       },
       "Dark Path" : {
-        "mode" : "selectable",
+        "canSelectDirectly": false,
+        "exploreWeight": 1,
         "completionFlag" : "explored_dark_path_1",
         "nodes" : [
             { "type" : "Display", "text" : "You're in a small room with a rat." },

@@ -28,7 +28,7 @@ class gameBase(tk.Tk):
             return None
 
     def pushScene(self, scene_type_id):
-        new_scene = self.static_data.sceneFactory[scene_type_id]()
+        new_scene = self.static_data.scene_factory[scene_type_id]()
         self.scene_stack.append(new_scene)
         new_scene.onOpen(self)
 

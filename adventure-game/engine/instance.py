@@ -113,7 +113,7 @@ class sceneInstance:
     def traverseNodes(self):
         node_data = self.currentNodeData()
         if not node_data:
-            self.dynamic_data.system_response = self.display_text
+            self.game.system_response = self.display_text
             self.game.popScene()
         else:
             try:
