@@ -3,8 +3,9 @@
     
     "defaultProfile" : {
       "current_state": "arena",
-      "current_enemy_type": "",
-      "current_enemy_level": 0
+      "game_flags": {},
+      "game_numbers" : {},
+      "game_strings" : {}
    },
 
    "equipSlots" : {

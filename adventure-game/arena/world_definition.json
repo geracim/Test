@@ -1,10 +1,40 @@
 {
   "arena" : { 
-  	"description" : "You stand in a massive arena currently deviod of any and all choice",
+    "description" : "You stand in a massive arena currently deviod of any and all choice",
   	"options" : [],
   	"enemy_types" : [],
   	"encounter_rate" : 0,
     "npc" : [],
-    "npc_options" : []
-	}
+    "npc_options" : [],
+    "instances" : {
+      "Gold Statue" : {
+        "mode" : "selectable",
+        "nodes" : [
+            { "type" : "Display", "text" : "You find a really boring statue that does nothing"},
+            { "type" : "Choice", "options": { "Ignore it" : {} } }
+        ]
+      },
+      "Dark Path" : {
+        "mode" : "selectable",
+        "completionFlag" : "explored_dark_path_1",
+        "nodes" : [
+            { "type" : "Display", "text" : "You're in a small room with a rat." },
+            { "type" : "Choice", "options" : {
+                "Ignore It" : { "action" : "self.skip(1)" },
+                "Murder It" : { "action" : "self.setTemp(0, True)" }
+                }
+            },
+            { "type" : "Display", "text" : "You found a gold key buried in the rat." },
+            { "type" : "Display", "text" : "There is a wooden chest with a rat carved on it." },
+            { "type" : "Choice", "options" : {
+                "Ignore It" : { "action" : "self.skip(2)" },
+                "Open It With Rat Key" : { "condition" : "self.getTemp(0)" }
+                }
+            },
+            { "type" : "Display", "text" : "You found something cool." },
+            { "type" : "MarkCompleted" }
+        ]
+      }
+    }
+  }
 }
