@@ -66,24 +66,6 @@ class sceneInstance:
     def skip(self, amount):
         self.node_id += amount
 
-    def traverseNodes(self):
-        node_data = self.currentNodeData()
-        if not node_data:
-            self.dynamic_data.system_response = self.display_text
-            self.game.changeScene('explore')
-        else:
-            try:
-                function = getattr(self, "do" + node_data["type"])
-            except:
-                print("ERROR: could not execute node of this type: " + str(node_data))
-                self.game.destroy()
-                return
-            finally:
-                result = function(node_data)
-                if result > 0:
-                    self.node_id += result
-                    self.traverseNodes()
-
     def doMarkCompleted(self, node_data):
         instance_data = self.currentInstanceData()
         if "completionFlag" not in instance_data:
@@ -127,3 +109,22 @@ class sceneInstance:
 
         self.node_id += 1
         self.traverseNodes()
+
+    def traverseNodes(self):
+        node_data = self.currentNodeData()
+        if not node_data:
+            self.dynamic_data.system_response = self.display_text
+            self.game.popScene()
+        else:
+            try:
+                function = getattr(self, "do" + node_data["type"])
+            except:
+                print("ERROR: could not execute node of this type: " + str(node_data))
+                self.game.destroy()
+                return
+            finally:
+                result = function(node_data)
+                if result > 0:
+                    self.node_id += result
+                    self.traverseNodes()
+

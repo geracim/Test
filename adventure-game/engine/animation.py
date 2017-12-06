@@ -25,3 +25,4 @@ class sceneAnimatingProgressBar:
             self.game.after(50, self.updateProgressBar)
         else:
             self.onFinishedAnimation()
+            self.game.popScene()

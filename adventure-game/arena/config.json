@@ -1,5 +1,5 @@
 {
-    "defaultScene" : "explore",
+    "defaultScene" : "location",
     
     "defaultProfile" : {
       "current_state": "arena",

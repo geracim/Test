@@ -32,21 +32,53 @@ class staticData:
 ##########################################################################################
 
 class adventureGameApp(tk.Tk):
-	current_scene = None
+	scene_stack = []
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
 
-	def changeScene(self, new_scene_id):
-		if self.current_scene != None:
-			self.current_scene.onClose()
-		# get the scene factory for the specified id, and call it to create a new scene
-		self.current_scene = staticData.sceneFactory[new_scene_id]()
-		self.current_scene.onOpen(self)
+	def getTopScene(self):
+		if len(self.scene_stack) > 0:
+			return self.scene_stack[-1]
+		else:
+			return None
+
+	def pushScene(self, scene_type_id):
+		new_scene = staticData.sceneFactory[scene_type_id]()
+		self.scene_stack.append(new_scene)
+		new_scene.onOpen(self)
+
+	def popScene(self):
+		if len(self.scene_stack) > 0:
+			self.getTopScene().onClose()
+			self.scene_stack = self.scene_stack[:-1]
+			if len(self.scene_stack) > 0:
+				ui_update_call = getattr(self.getTopScene(), "ui", None)
+				if ui_update_call is not None:
+					self.getTopScene().ui()
+		else:
+			raise "ERROR: Attempt to pop with no scenes"
+
+	def clearSceneStack(self):
+		while len(self.scene_stack):
+			self.popScene()
+
+	def resetSceneStack(self):
+		self.clearSceneStack()
+		self.pushScene(staticData.config["defaultScene"])
 
 	def clear(self):
 		for widget in self.pack_slaves():
 			widget.destroy()
 	
+	def flushSystemResponseAndAppend(self, text):
+		result = ""
+		if dynamicData.system_response:
+			result += dynamicData.system_response + "\n"
+			dynamicData.system_response = ""
+
+		result += text
+		return result
+
 	def rebuildBasicUi(self, displayText, userOptions):
 		self.clear()
 		
@@ -58,7 +90,7 @@ class adventureGameApp(tk.Tk):
 			button = ttk.Button(
 				btnFrame,
 				text=userOptions[commandKey],
-				command=lambda i=commandKey: self.current_scene.onSelect(i))
+				command=lambda i=commandKey: self.getTopScene().onSelect(i))
 			button.pack(side=tk.LEFT)
 
 	def loadDataElement(self, element, file_extra_tag=""):
@@ -101,7 +133,6 @@ class sceneSave(animation.sceneAnimatingProgressBar):
 	        dynamicData.system_response = loc.translate("scene.save.success")
 	    else:
 	        dynamicData.system_response = loc.translate("scene.save.failure")
-	    self.game.changeScene(staticData.config["defaultScene"])
 
 staticData.sceneFactory['save'] = lambda: sceneSave()
 
@@ -121,7 +152,6 @@ class sceneLoad(animation.sceneAnimatingProgressBar):
 			dynamicData.system_response = loc.translate("scene.load.success")
 		else:
 			dynamicData.system_response = loc.translate("scene.load.failure")
-		self.game.changeScene(staticData.config["defaultScene"])
 
 staticData.sceneFactory['load'] = lambda: sceneLoad()
 
@@ -129,6 +159,11 @@ staticData.sceneFactory['load'] = lambda: sceneLoad()
 class sceneEncounter:
 	def onOpen(self, game):
 		self.game = game
+		area = staticData.world_definition[dynamicData.profile["current_state"]]
+		enemyTypeIndex = random.randint(0, len(area["enemy_types"])-1)
+		enemyType = area["enemy_types"][enemyTypeIndex]
+		dynamicData.profile["current_enemy_type"] = enemyType["id"]
+		dynamicData.profile["current_enemy_level"] = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
 		self.ui()
 
 	def onClose(self):
@@ -142,10 +177,11 @@ class sceneEncounter:
 	def onSelect(self, selection):
 		if selection == 'w':
 			dynamicData.system_response = "You survived."
-			self.game.changeScene('explore')
+			self.game.popScene()
 		elif selection == 'l':
 			dynamicData.system_response = "You died."
-			self.game.changeScene('load')
+			self.game.resetSceneStack()
+			self.game.pushScene('load')
 
 staticData.sceneFactory['encounter'] = lambda: sceneEncounter()
 
@@ -154,7 +190,7 @@ staticData.sceneFactory['encounter'] = lambda: sceneEncounter()
 staticData.sceneFactory['instance'] = lambda: instance.sceneInstance(staticData, dynamicData, loc)
 
 ##########################################################################################
-class sceneExplore:
+class sceneLocation:
 	def onOpen(self, game):
 		self.game = game
 		self.ui()
@@ -163,14 +199,12 @@ class sceneExplore:
 		pass
 
 	def ui(self):
-		display_text = ""
-		if dynamicData.system_response:
-			display_text += dynamicData.system_response + "\n"
 		
 		area = staticData.world_definition[dynamicData.profile["current_state"]]
 		
 		# always display the "general" section of the explore info
-		display_text += loc.translate("scene.explore.info.general", area)
+		translated_area_text = loc.translate("scene.explore.info.general", area)
+		display_text = self.game.flushSystemResponseAndAppend(translated_area_text)
 
 		user_options = {"q": "Quit", "l": "Load", "s": "Save"}
 		if "options" in area:
@@ -187,27 +221,23 @@ class sceneExplore:
 	def onSelect(self, selection):
 		area = staticData.world_definition[dynamicData.profile["current_state"]]
 		if selection == 'l':
-			self.game.changeScene('load')
+			self.game.pushScene('load')
 		elif selection == 's':
-			self.game.changeScene('save')
+			self.game.pushScene('save')
 		elif selection == 'q':
 			self.game.destroy()
 		elif "options" in area and selection in area["options"]:
 			dynamicData.profile["current_state"] = selection
 			area = staticData.world_definition[selection]
 			if random.randint(1, 100) < area["encounter_rate"]:
-				enemyTypeIndex = random.randint(0, len(area["enemy_types"])-1)
-				enemyType = area["enemy_types"][enemyTypeIndex]
-				dynamicData.profile["current_enemy_type"] = enemyType["id"]
-				dynamicData.profile["current_enemy_level"] = random.randint(enemyType["levelRange"][0], enemyType["levelRange"][1])
-				self.game.changeScene('encounter')
+				self.game.pushScene('encounter')
 			else:
 				self.ui()
 		elif "instances" in area and selection in area["instances"]:
 			dynamicData.profile["current_instance"] = selection
-			self.game.changeScene('instance')
+			self.game.pushScene('instance')
 
-staticData.sceneFactory['explore'] = lambda: sceneExplore()
+staticData.sceneFactory['location'] = lambda: sceneLocation()
 
 ##########################################################################################        
 #######################################Core loop##########################################
@@ -224,7 +254,7 @@ if __name__ == "__main__":
 		app.loadData('gary')
 
 	# load the default scene as specified in the game config
-	app.changeScene( staticData.config["defaultScene"] )
+	app.resetSceneStack()
 
 	# start game core
 	app.mainloop()
