@@ -161,6 +161,37 @@ class sceneEncounter:
 
 staticData.sceneFactory['encounter'] = lambda: sceneEncounter()
 
+'''The Menu scene expose the system level actions to the user
+
+(Saving the game, loading the saved game, and quitting)
+'''
+class sceneMenu:
+	def onOpen(self, game):
+		self.game = game
+		self.ui()
+
+	def onClose(self):
+		pass
+
+	def ui(self):
+		user_options = {"b": "Back", "s": "Save", "l": "Load", "q": "Quit"}
+		self.game.rebuildBasicUi("", user_options)
+
+	def onSelect(self, selection):
+		area = staticData.world_definition[dynamicData.profile["current_state"]]
+		if selection == 'b':
+			self.game.popScene()
+		elif selection == 's':
+			self.game.popScene()
+			self.game.pushScene('save')
+		elif selection == 'l':
+			self.game.popScene()
+			self.game.pushScene('load')
+		elif selection == 'q':
+			self.game.destroy()
+
+staticData.sceneFactory['menu'] = lambda: sceneMenu()
+
 '''The Location scene is the bottom level interaction scene, which all other
 scenes are intended to build upon.  This scene should mostly serve as a first
 menu, which mostly just opens other menus for the player to navigate
@@ -181,7 +212,7 @@ class sceneLocation:
 		translated_area_text = loc.translate("scene.explore.info.general", area)
 		display_text = self.game.flushSystemResponseAndAppend(translated_area_text)
 
-		user_options = {"q": "Quit", "l": "Load", "s": "Save"}
+		user_options = {"m": "Menu"}
 		if "options" in area:
 			for command in area["options"]:
 				user_options[command] = loc.translate(command)
@@ -195,16 +226,12 @@ class sceneLocation:
 
 	def onSelect(self, selection):
 		area = staticData.world_definition[dynamicData.profile["current_state"]]
-		if selection == 'l':
-			self.game.pushScene('load')
-		elif selection == 's':
-			self.game.pushScene('save')
-		elif selection == 'q':
-			self.game.destroy()
+		if selection == 'm':
+			self.game.pushScene('menu')
 		elif "options" in area and selection in area["options"]:
 			dynamicData.profile["current_state"] = selection
 			area = staticData.world_definition[selection]
-			if random.randint(1, 100) < area["encounter_rate"]:
+			if "encounter_rate" in area and random.randint(1, 100) < area["encounter_rate"]:
 				self.game.pushScene('encounter')
 			else:
 				self.ui()
