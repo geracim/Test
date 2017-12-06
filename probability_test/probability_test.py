@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import random
-import time
+import sys
 import json
 import os
 
@@ -11,46 +11,61 @@ def clear():
     else:
         os.system('clear')
 
-class state:
-	play = True
-	t = 1
-	jsonList = []
-	num_runs = 10000
-	object_weight = 100
-
-def load():
+def load(source_file):
+    result = []
     try:
-        with open ('probs.json', 'r') as in_file:
+        with open (source_file, 'r') as in_file:
             rawStringContents = in_file.read()
-            state.jsonList = json.loads(rawStringContents)
+            result = json.loads(rawStringContents)
     except:
-    	print("error")
+        print("error loading source json")
+    return result
 
-def run():
-	# load from json file
-	load()
-	
-	return random.randint(0, len(state.jsonList)-1)
+def pick_random_with_weights(option_list):
+    # tally up the total roll by summing all the weight values
+    total = sum( item["weight"] for item in option_list )
+    roll = random.randint(0, total-1)
 
-	# print a specific thing for debugging
-	# print(state.jsonList[0]["weight"])
+    result = ""
+    # loop through each id/weight item
+    for item in option_list:
+        # deduct this weighting from the roll
+        roll -= item["weight"]
+        # if this deduction drops us to zero, then this is our result
+        if roll < 0:
+            result = item["id"]
+            break
 
-clear()
-counts = {}
-
-while state.t < state.num_runs:
-	random_choice = run()
-	if not random_choice in counts:
-		counts[random_choice] = 1
-	else:
-		counts[random_choice] += 1
-	state.t += 1
-
-print(counts)
+    return result
 
 
-"""
+def main():
+    clear()
 
-((state.jsonList[random_choice]["weight"]) * 10)
+    if len(sys.argv) > 1:
+        roll_count = int(sys.argv[1])
+    else:
+        roll_count = 1000
 
-"""
+    # load in the json data
+    option_list = load('probs.json')
+
+    # throw the dice a fuckton of times, and tally the results
+    counts = {}
+    for t in range(roll_count):
+
+    	random_choice = pick_random_with_weights(option_list)
+    	if not random_choice in counts:
+    		counts[random_choice] = 1
+    	else:
+    		counts[random_choice] += 1
+
+    # display the result of rolls
+    for item in counts:
+        percent = 100 * (counts[item] / roll_count)
+        formatted_percent = '%.2f' % percent + "%"
+        print(item + ": " + formatted_percent)
+
+if __name__ == "__main__":
+    main()
+
