@@ -28,6 +28,12 @@ class staticData:
 
 ##########################################################################################
 
+'''The AdventureGameApp inherits from gameBase (defined in engine/game.py) which in turn
+inherits from tkinter's core (tkinter.Tk)
+
+Under the hood, this class has support for managing the scene stack, loading in static
+data, and low level ui creation / callback hooks
+'''
 class adventureGameApp(game.gameBase):
 	
 	def __init__(self):
@@ -68,6 +74,12 @@ class adventureGameApp(game.gameBase):
 ########################################Scenes############################################
 ##########################################################################################
 
+'''The Save scene plays a progress bar animation, then attempts to export the
+current user's profile to a json save file
+
+The bulk of this scene is defined in engine/animation.py, and only utilities
+on scenes of this type must be implemented
+'''
 class sceneSave(animation.sceneAnimatingProgressBar):
 	def generatePromptText(self):
 	    return loc.translate("scene.save.open")
@@ -82,7 +94,12 @@ class sceneSave(animation.sceneAnimatingProgressBar):
 
 staticData.sceneFactory['save'] = lambda: sceneSave()
 
-##########################################################################################
+'''The Load scene plays a progress bar animation, then attempts to import saved
+game json to replace the user's profile
+
+The bulk of this scene is defined in engine/animation.py, and only utilities
+on scenes of this type must be implemented
+'''
 class sceneLoad(animation.sceneAnimatingProgressBar):
 	def generatePromptText(self):
 	    return loc.translate("scene.load.open")
@@ -101,7 +118,23 @@ class sceneLoad(animation.sceneAnimatingProgressBar):
 
 staticData.sceneFactory['load'] = lambda: sceneLoad()
 
-##########################################################################################
+'''An instance is a scene that walks through a set of scripted narrative choices
+instances are defined on each area in the world_definitions file
+
+This type of scene is wholesale defined in engine/encounter.py
+no local scene code is necessary
+'''
+
+staticData.sceneFactory['instance'] = lambda: instance.sceneInstance(staticData, dynamicData, loc)
+
+'''An encounter executes a battle between the user and an enemy configuration pulled
+from the area, or another scripted source
+
+The encounter will continue until reaching either a win or lose state, which will 
+either return the user to the next highest scene on the stack, or trigger a load of the
+most recent saved game
+'''
+
 class sceneEncounter:
 	def onOpen(self, game):
 		self.game = game
@@ -128,11 +161,10 @@ class sceneEncounter:
 
 staticData.sceneFactory['encounter'] = lambda: sceneEncounter()
 
-##########################################################################################
-
-staticData.sceneFactory['instance'] = lambda: instance.sceneInstance(staticData, dynamicData, loc)
-
-##########################################################################################
+'''The Location scene is the bottom level interaction scene, which all other
+scenes are intended to build upon.  This scene should mostly serve as a first
+menu, which mostly just opens other menus for the player to navigate
+'''
 class sceneLocation:
 	def onOpen(self, game):
 		self.game = game
