@@ -5,7 +5,7 @@ import os
 import sys
 import time
 import random
-from engine import io, loc, animation, instance, game
+from engine import io, loc, animation, instance, game, calc
 
 import tkinter as tk
 from tkinter import ttk
@@ -106,16 +106,14 @@ class sceneEncounter:
 	def onOpen(self, game):
 		self.game = game
 		area = staticData.world_definition[dynamicData.profile["current_state"]]
-		enemyTypeIndex = random.randint(0, len(area["enemy_types"])-1)
-		enemyType = area["enemy_types"][enemyTypeIndex]
-		self.current_enemy_type = enemyType["id"]
+		self.current_enemy_type = calc.pick_random_with_weights(area["encounter_types"])
 		self.ui()
 
 	def onClose(self):
 		pass
 
 	def ui(self):
-		display_text = "You are being attacked by a " + self.current_enemy_type
+		display_text = "You have started a " + self.current_enemy_type + " encounter"
 		user_options = { 'w': 'Win', 'l': 'Lose' }
 		self.game.rebuildBasicUi(display_text, user_options)
 
