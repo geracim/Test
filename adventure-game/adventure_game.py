@@ -21,9 +21,11 @@ class dynamicData:
 
 class staticData:
 	active_game = None
+	
 	config = {}
-	world_definition = {}
+	locations = {}
 	strings = {}
+	
 	scene_factory = {}
 
 ##########################################################################################
@@ -62,7 +64,7 @@ class adventureGameApp(game.gameBase):
 
 		self.loadDataElement('config')
 		self.loadDataElement('strings', '_en')
-		self.loadDataElement('world_definition')
+		self.loadDataElement('locations')
 
 		# Set up the dynamic profile with the supplied default profile in config
 		dynamicData.profile = self.static_data.config['defaultProfile']
@@ -119,7 +121,7 @@ class sceneLoad(animation.sceneAnimatingProgressBar):
 staticData.scene_factory['load'] = lambda: sceneLoad()
 
 '''An instance is a scene that walks through a set of scripted narrative choices
-instances are defined on each area in the world_definitions file
+instances are defined on each area in the locations.py file
 
 This type of scene is wholesale defined in engine/encounter.py
 no local scene code is necessary
@@ -138,7 +140,7 @@ most recent saved game
 class sceneEncounter:
 	def onOpen(self, game):
 		self.game = game
-		area = staticData.world_definition[dynamicData.profile['current_state']]
+		area = staticData.locations[dynamicData.profile['current_state']]
 		self.current_enemy_type = calc.pick_random_with_weights(area['encounter_types'])
 		self.ui()
 
@@ -178,7 +180,7 @@ class sceneMenu:
 		self.game.rebuildBasicUi("", user_options)
 
 	def onSelect(self, selection):
-		area = staticData.world_definition[dynamicData.profile['current_state']]
+		area = staticData.locations[dynamicData.profile['current_state']]
 		if selection == 'b':
 			self.game.popScene()
 		elif selection == 's':
@@ -205,7 +207,7 @@ class sceneTravel:
 
 	def ui(self):
 		user_options = {'b': '<-'}
-		area = staticData.world_definition[dynamicData.profile['current_state']]
+		area = staticData.locations[dynamicData.profile['current_state']]
 
 		for command in area['travel']:
 			user_options[command] = loc.translate(command)
@@ -213,12 +215,12 @@ class sceneTravel:
 		self.game.rebuildBasicUi('', user_options)
 
 	def onSelect(self, selection):
-		area = staticData.world_definition[dynamicData.profile['current_state']]
+		area = staticData.locations[dynamicData.profile['current_state']]
 		if selection == 'b':
 			self.game.popScene()
 		elif selection in area['travel']:
 			dynamicData.profile['current_state'] = selection
-			area = staticData.world_definition[selection]
+			area = staticData.locations[selection]
 			self.game.popScene()
 			if 'encounter_rate' in area and random.randint(1, 100) < area['encounter_rate']:
 				self.game.pushScene('encounter')
@@ -239,7 +241,7 @@ class sceneLocation:
 
 	def ui(self):
 		
-		area = staticData.world_definition[dynamicData.profile['current_state']]
+		area = staticData.locations[dynamicData.profile['current_state']]
 		
 		# always display the "general" section of the explore info
 		translated_area_text = loc.translate('scene.explore.info.general', area)
@@ -265,7 +267,7 @@ class sceneLocation:
 		self.game.rebuildBasicUi(display_text, user_options)
 
 	def onSelect(self, selection):
-		area = staticData.world_definition[dynamicData.profile['current_state']]
+		area = staticData.locations[dynamicData.profile['current_state']]
 		if selection == 'm':
 			self.game.pushScene('menu')
 		elif selection == 't':

@@ -15,7 +15,7 @@ class sceneInstance:
         pass
 
     def currentInstanceData(self):
-        host_state = self.static_data.world_definition[self.dynamic_data.profile["current_state"]]
+        host_state = self.static_data.locations[self.dynamic_data.profile["current_state"]]
         return host_state["instances"][self.dynamic_data.profile["current_instance"]]
 
     def currentNodeData(self):
