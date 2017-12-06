@@ -2,7 +2,7 @@
     "defaultScene" : "explore",
     
     "defaultProfile" : {
-      "current_state": "cambria",,
+      "current_state": "cambria",
       "game_flags": {},
       "game_numbers" : {},
       "game_strings" : {}

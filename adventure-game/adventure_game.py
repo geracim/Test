@@ -300,13 +300,15 @@ class sceneExplore:
 		display_text += loc.translate("scene.explore.info.general", area)
 
 		user_options = {"q": "Quit", "l": "Load", "s": "Save"}
-		for command in area["options"]:
-			user_options[command] = loc.translate(command)
-		for command in area["instances"]:
-			instance_data = area["instances"][command]
-			if "completionFlag" not in instance_data or instance_data["completionFlag"] not in dynamicData.profile["game_flags"]:
-				if instance_data["mode"] == "selectable":
-					user_options[command] = loc.translate(command)
+		if "options" in area:
+			for command in area["options"]:
+				user_options[command] = loc.translate(command)
+		if "instances" in area:
+			for command in area["instances"]:
+				instance_data = area["instances"][command]
+				if "completionFlag" not in instance_data or instance_data["completionFlag"] not in dynamicData.profile["game_flags"]:
+					if instance_data["mode"] == "selectable":
+						user_options[command] = loc.translate(command)
 		self.game.rebuildBasicUi(display_text, user_options)
 
 	def onSelect(self, selection):
@@ -317,7 +319,7 @@ class sceneExplore:
 			self.game.changeScene('save')
 		elif selection == 'q':
 			self.game.destroy()
-		elif selection in area["options"]:
+		elif "options" in area and selection in area["options"]:
 			dynamicData.profile["current_state"] = selection
 			area = staticData.world_definition[selection]
 			if random.randint(1, 100) < area["encounter_rate"]:
@@ -328,7 +330,7 @@ class sceneExplore:
 				self.game.changeScene('encounter')
 			else:
 				self.ui()
-		elif selection in area["instances"]:
+		elif "instances" in area and selection in area["instances"]:
 			dynamicData.profile["current_instance"] = selection
 			self.game.changeScene('instance')
 
