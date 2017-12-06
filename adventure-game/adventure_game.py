@@ -210,8 +210,10 @@ class sceneTravel:
 		area = staticData.locations[dynamicData.profile['current_state']]
 
 		for command in area['travel']:
-			user_options[command] = loc.translate(command)
-
+			flag_id = area['travel'][command]
+			if flag_id == "" or (flag_id in dynamicData.profile['game_flags'] and dynamicData.profile['game_flags'][flag_id]):
+				user_options[command] = loc.translate(command)
+				
 		self.game.rebuildBasicUi('', user_options)
 
 	def onSelect(self, selection):
@@ -249,8 +251,16 @@ class sceneLocation:
 
 		user_options = {'m': 'Menu'}
 		explore_weights = {}
-		if 'travel' in area and len(area['travel']) > 0:
-			user_options['t'] = 'Travel'
+		if 'travel' in area:
+			for link in area['travel']:
+				flag_id = area['travel'][link]
+				if flag_id == "":
+					user_options['t'] = 'Travel'
+					break
+				elif flag_id in dynamicData.profile['game_flags'] and dynamicData.profile['game_flags'][flag_id]:
+					user_options['t'] = 'Travel'
+					break
+				
 		if 'instances' in area:
 			for command in area['instances']:
 				instance_data = area['instances'][command]

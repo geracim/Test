@@ -8,9 +8,7 @@
    "scene.load.failure" : "game load error",
 
    "scene.explore.info.general" : [
-      "{description}",
-      "[ OPTIONS ]",
-      "None."
+      "{description}"
    ],
    "scene.explore.prompt" : "> "
 }

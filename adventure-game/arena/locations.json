@@ -1,7 +1,7 @@
 {
   "arena" : { 
     "description" : "You stand in a massive arena currently deviod of any and all choice",
-    "travel" : [],
+    "travel" : { "rat_place":"explored_dark_path_1" },
     "encounter_types" : {},
     "encounter_rate" : 0,
     "npc" : [],
@@ -38,5 +38,9 @@
         ]
       }
     }
+  },
+  "rat_place" : {
+	"description" : "This is a secret room you can only get to after the little rat quest",
+	"travel" : { "arena":"" }
   }
 }
