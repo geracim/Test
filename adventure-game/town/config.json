@@ -8,11 +8,6 @@
       "game_strings" : {"weaver_name":""}
    },
 
-   "equipSlots" : {
-      "hand" : { "display" : "player.equip.hand" },
-      "head" : { "display" : "player.equip.head" },
-      "chest" : { "display" : "player.equip.chest" } 
-   },
-   
-   "useBattleSystem" : true
+   "equipSlots" : {},
+   "useBattleSystem" : false
 }

@@ -245,20 +245,19 @@ class sceneLocation:
 		
 		area = staticData.locations[dynamicData.profile['current_state']]
 		
-		# always display the "general" section of the explore info
-		translated_area_text = loc.translate('scene.explore.info.general', area)
+		translated_area_text = loc.translate(area['description'])
 		display_text = self.game.flushSystemResponseAndAppend(translated_area_text)
 
-		user_options = {'m': 'Menu'}
+		user_options = {'m': loc.translate('scene.location.menu')}
 		explore_weights = {}
 		if 'travel' in area:
 			for link in area['travel']:
 				flag_id = area['travel'][link]
 				if flag_id == "":
-					user_options['t'] = 'Travel'
+					user_options['t'] = loc.translate('scene.location.travel')
 					break
 				elif flag_id in dynamicData.profile['game_flags'] and dynamicData.profile['game_flags'][flag_id]:
-					user_options['t'] = 'Travel'
+					user_options['t'] = loc.translate('scene.location.travel')
 					break
 				
 		if 'instances' in area:
@@ -278,7 +277,7 @@ class sceneLocation:
 
 		if len(explore_weights) > 0:
 			explore_action = calc.pick_random_with_weights(explore_weights)
-			user_options[explore_action] = 'Explore'
+			user_options[explore_action] = loc.translate('scene.location.explore')
 
 		self.game.rebuildBasicUi(display_text, user_options)
 

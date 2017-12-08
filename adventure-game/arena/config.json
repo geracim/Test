@@ -1,6 +1,6 @@
 {
     "defaultScene" : "location",
-    
+
     "defaultProfile" : {
       "current_state": "arena",
       "game_flags": {},
@@ -11,8 +11,8 @@
    "equipSlots" : {
       "hand" : { "display" : "player.equip.hand" },
       "head" : { "display" : "player.equip.head" },
-      "chest" : { "display" : "player.equip.chest" } 
+      "chest" : { "display" : "player.equip.chest" }
    },
-   
+
    "useBattleSystem" : true
 }

@@ -7,8 +7,7 @@
    "scene.load.success" : "Ah, I found you, adventurer.\nWe left off at the {profile.current_state}.",
    "scene.load.failure" : "Hmm... Have we met before, adventurer?\nIf this is the first time, please enter 's' to have me remember this meeting spot.",
 
-   "scene.explore.info.general" : [
-      "{description}"
-   ],
-   "scene.explore.prompt" : "What would you like to do?\n> "
+   "scene.location.menu" : "Menu",
+   "scene.location.travel" : "Travel",
+   "scene.location.explore" : "Explore"
 }
