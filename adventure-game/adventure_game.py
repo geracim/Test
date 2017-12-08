@@ -15,7 +15,8 @@ from tkinter import ttk
 ##########################################################################################
 
 class dynamicData:
-	profile = {}
+    profile = {}
+    encounter_id = ""
 
 ##########################################################################################
 
@@ -140,8 +141,11 @@ most recent saved game
 class sceneEncounter:
 	def onOpen(self, game):
 		self.game = game
-		area = staticData.locations[dynamicData.profile['current_state']]
-		self.current_enemy_type = calc.pick_random_with_weights(area['encounter_types'])
+		if dynamicData.encounter_id:
+			self.current_enemy_type = dynamicData.encounter_id
+		else:
+			area = staticData.locations[dynamicData.profile['current_state']]
+			self.current_enemy_type = calc.pick_random_with_weights(area['encounter_types'])
 		self.ui()
 
 	def onClose(self):
@@ -225,6 +229,7 @@ class sceneTravel:
 			area = staticData.locations[selection]
 			self.game.popScene()
 			if 'encounter_rate' in area and random.randint(1, 100) < area['encounter_rate']:
+				dynamicData.encounter_id = ""
 				self.game.pushScene('encounter')
 
 staticData.scene_factory['travel'] = lambda: sceneTravel()

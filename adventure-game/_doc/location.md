@@ -44,6 +44,11 @@
 			* You may skip over this node, if you only want an instance to be finished under certain conditions
 		* "Done" - ends the instance, skipping all future nodes
 		* "Quit" - shuts down the game
+		* "TriggerEncounter" - starts a battle encounter during the instance
+			* "encounter" may be specified on the node to select a specific battle encounter type
+			* If no encounter field is specified, the encounter will roll a weighted random selection for the current area
+			* If the user wins the encounter, the instance will progress to the next node
+			* If the user loses the encounter, the normal death -> reload flow will be run
 
 ## Instance Node Choice Functions
   Both the "action" and "condition" options on Choice options will execute short blocks of python.

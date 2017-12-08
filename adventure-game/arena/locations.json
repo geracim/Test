@@ -1,7 +1,21 @@
 {
   "arena" : { 
     "description" : "You stand in a massive arena currently deviod of any and all choice",
-    "encounter_types" : {},
-    "encounter_rate" : 0
+    "encounter_types" : {
+        "wombat2": 6,
+        "platypus": 6,
+        "wombat_platypus": 4,
+        "american1": 3,
+        "american3": 2
+    },
+    "encounter_rate" : 0,
+    "instances" : {
+        "Fight in the Arena" : {
+            "canSelectDirectly": true,
+            "nodes" : [
+                { "type" : "TriggerEncounter" }
+            ]
+        }
+    }
   }
 }
