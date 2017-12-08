@@ -5,7 +5,7 @@ import os
 import sys
 import time
 import random
-from engine import io, loc, animation, instance, game, calc
+from _engine import io, loc, animation, instance, game, calc
 
 import tkinter as tk
 from tkinter import ttk
