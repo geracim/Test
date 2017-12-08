@@ -132,6 +132,9 @@ class sceneInstance:
 
 		if "action" in option_data:
 			exec(option_data["action"])
+			
+		if "skip" in option_data:
+			self.node_id += eval(str(option_data["skip"]))
 
 		self.node_id += 1
 		self.traverseNodes()

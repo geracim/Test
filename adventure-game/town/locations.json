@@ -12,7 +12,7 @@
 					"Politely ask the chest to open" : {},
 					"Use the fucking key" : {
 						"condition" : "self.getFlag('beat_up_elf')",
-						"action" : "self.skip(2)" }
+						"skip" : 2 }
 					}
 				},
 				{ "type" : "Display", "text" : "...that so did not work..."},
@@ -64,7 +64,7 @@
             { "type" : "Display", "text" : "You find a dubious elf leaning against the wall smoking a blunt."},
             { "type" : "Choice", "options": { 
 				"'Sup'" : {},
-				"Just like... beat the everloving crap out of him.": {"condition" : "self.getFlag('get_elf_task')", "action":"self.skip(3)"}
+				"Just like... beat the everloving crap out of him.": {"condition" : "self.getFlag('get_elf_task')", "skip":3}
 				}
 			},
             { "type" : "Display", "text" : "The dubious elf raises and eyebrow.\nAfter about twenty seconds you figure they aren't going to say anything."},
@@ -85,7 +85,7 @@
 				"'Sup'" : {},
 				"'I heard you wanted a name'" : { 
 					"condition" : "self.getFlag('weaver_needs_name') and self.getString('weaver_name') == ''", 
-					"action" : "self.skip(3)" }
+					"skip" : 3 }
 				} 
 			},
             { "type" : "Display", "text" : "'not much'"},

@@ -36,6 +36,7 @@
 			* options can list an "action", which will execute any python code desired in the context of the instance
 			* options can list a "condition", which will evaluate any python code desired in the context of the instance
 				* if a condition is specified and the condition not met, this option will not be presented to the player as a choice
+			* options can list a "skip", which is a shorthand for a self.skip action
 		* "Display" - adds a block of specified "text" for the user to read
 			* this text, and all other displayed text will technically not be shown until the next "Choice" node
 			* if a "Display" node doesn't have any choices after it, it will be shown on the root location when the instance finishes
