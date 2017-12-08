@@ -87,8 +87,8 @@ class sceneInstance:
 
 	def doTriggerEncounter(self, node_data):
 		instance_data = self.currentInstanceData()
-		if "encounter" in instance_data:
-			self.dynamic_data.encounter_id = instance_data["encounter"]
+		if "encounter" in node_data:
+			self.dynamic_data.encounter_id = node_data["encounter"]
 		else:
 			self.dynamic_data.encounter_id = ""
 		self.game.pushScene("encounter")
