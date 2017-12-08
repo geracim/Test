@@ -66,6 +66,15 @@ class sceneInstance:
     def skip(self, amount):
         self.node_id += amount
 
+    def doQuit(self, node_data):
+        self.game.destroy()
+        return 0
+
+    def doDone(self, node_data):
+        self.game.system_response = self.display_text
+        self.game.popScene()
+        return 0
+
     def doMarkCompleted(self, node_data):
         instance_data = self.currentInstanceData()
         if "completionFlag" not in instance_data:
@@ -93,7 +102,11 @@ class sceneInstance:
         for key in node_data["options"]:
             option_data = node_data["options"][key]
             # if a key has a condition, only add it when condition is met
-            if "condition" not in option_data or eval(option_data["condition"]):
+            valid = True
+            if "condition" in option_data:
+                valid = eval(option_data["condition"])
+
+            if valid:
                 options[key] = self.loc_hook.translate(key)
 
         self.game.rebuildBasicUi(self.display_text, options)

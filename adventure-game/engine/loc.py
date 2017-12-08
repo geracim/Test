@@ -48,7 +48,7 @@ def translate( input_string, local_data=None ):
                     else:
                         node = None
                         break
-            if node:
+            if node is not None:
                 # replace the string
                 result = result.replace( "{" + matchKey + "}", str(node) )
     return result

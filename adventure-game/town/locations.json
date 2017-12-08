@@ -1,0 +1,126 @@
+{
+  "tower" : {
+    "description" : "You stand in a small tower littered with like vials and chemical looking things and shit.\nYou toooootally live here.\nSo like, it would be a reasonable conclusion to assume you are a wizard or an alchemist or whatever.\nYou'd be wrong to assume that, but like...\nit's reasonable for you to think at this point in the new user experience.\nThats NUX, except those Zynga assholes say FTUE for first time user experience, which is stupid.\nAnyway, I understand.  Not judging.  Much.\nEither way, there's a chest which is locked that you want to open cause like, it's totally yours.",
+    "travel" : { "courtyard":"" },
+	"instances" : {
+		"Fuck with 'your' Chest" : {
+			"canSelectDirectly": true,
+			"nodes" : [
+				{ "type" : "Choice", "options": { 
+					"Kick the chest" : {},
+					"Punch the chest" : {},
+					"Politely ask the chest to open" : {},
+					"Use the fucking key" : {
+						"condition" : "self.getFlag('beat_up_elf')",
+						"action" : "self.skip(2)" }
+					}
+				},
+				{ "type" : "Display", "text" : "...that so did not work..."},
+				{ "type" : "Done" },
+				{ "type" : "Display", "text" : "YOU OPENED THE CHEST!  Which you know was totally yours all along.\nTooooooooootally.\nAnd you take out things in the chest that were definitely yours\nand not like the valuable property of a wizard you sent off on a\nfake wild goose chase about some shit with dragons and princesses.\n\nSo... let's just end the game here before the wizard gets back\nand like murders the shit out of you."},
+				{ "type" : "Choice", "options" : {"Sure... what you said...": {}} },
+				{ "type" : "Quit" }
+			]
+		},
+		"Mysterious Note" : {
+			"canSelectDirectly": true,
+			"unlockFlag" : "beat_up_elf",
+			"nodes" : [
+				{ "type" : "Display", "text" : "'Dear protagonist,\n\n...\n\n...\n\n...\n\n\nFUCK YOU.\n\n - Seamus the Elf'"},
+				{ "type" : "Choice", "options": { "Ok..." : {} } }
+			]
+		}
+	}
+  },
+  "courtyard" : {
+    "description" : "The castle courtyard seems totally normal to you, because you've lived here your whole goddamn life\nso anything that might be objectively interesting about this place you are totally used to by now.",
+    "travel" : { "tower":"" },
+    "instances" : {
+      "Stable Master" : {
+        "exploreWeight": 1,
+        "nodes" : [
+            { "type" : "Display", "text" : "You come across the stablemaster, who is preoccupied with his fidget spinner."},
+            { "type" : "Choice", "options": { 
+				"'Sup'" : {}
+				} 
+			},
+            { "type" : "Display", "text" : "'Not much, sup wit'chu?'"},
+            { "type" : "Choice", "options": { 
+				"'You know, doing shit'" : {}
+				} 
+			},
+            { "type" : "Display", "text" : "'Cool, cool.  I heard the weaver was looking for a name.'"},
+            { "type" : "Choice", "options": { 
+				"'Bye'" : { "action" : "self.setFlag('weaver_needs_name', True)" }
+				} 
+			},
+			{ "type" : "Done" }
+        ]
+      },
+	  "Dubious Elf" : {
+        "exploreWeight": 1,
+        "completionFlag" : "beat_up_elf",
+        "nodes" : [
+            { "type" : "Display", "text" : "You find a dubious elf leaning against the wall smoking a blunt."},
+            { "type" : "Choice", "options": { 
+				"'Sup'" : {},
+				"Just like... beat the everloving crap out of him.": {"condition" : "self.getFlag('get_elf_task')", "action":"self.skip(3)"}
+				}
+			},
+            { "type" : "Display", "text" : "The dubious elf raises and eyebrow.\nAfter about twenty seconds you figure they aren't going to say anything."},
+            { "type" : "Choice", "options": { 
+				"'Bye'" : {}
+				}
+			},
+			{ "type" : "Done" },
+            { "type" : "Display", "text" : "'OW!  OW JESUS OW!  WHAT THE FUCK DUDE?  WHAT THE FUCK?'\n...the post-beatdown dubious elf dropped a key."},
+			{ "type" : "MarkCompleted" }
+        ]
+      },
+      "Weaver" : {
+        "exploreWeight": 1,
+        "nodes" : [
+            { "type" : "Display", "text" : "You run into {profile.game_strings.weaver_name}the village weaver.  She glances at you but seems busy."},
+            { "type" : "Choice", "options": { 
+				"'Sup'" : {},
+				"'I heard you wanted a name'" : { 
+					"condition" : "self.getFlag('weaver_needs_name') and self.getString('weaver_name') == ''", 
+					"action" : "self.skip(3)" }
+				} 
+			},
+            { "type" : "Display", "text" : "'not much'"},
+            { "type" : "Choice", "options": { 
+				"'Bye'" : {}
+				} 
+			},
+			{ "type" : "Done" },
+            { "type" : "Display", "text" : "'yeah, I lost mine in a bet.\nIt was like... a five-drinks-in-thing, you know.\nWhat'chu got?'"},
+            { "type" : "Choice", "options": {
+				"'Jenny?'" : { "action": "self.setString('weaver_name', 'Jenny ')" },
+				"'Ezekiel?'" : { "action": "self.setString('weaver_name', 'Ezekiel ')" },
+				"'Annabelle?'" : { "action": "self.setString('weaver_name', 'Annabelle ')" },
+				"'Deathfist the Deathinator?'" : { "action": "self.setString('weaver_name', 'Deathfist the Deathinator ')" }
+				} 
+			},
+            { "type" : "Display", "text" : "'Thanks.  Could you do me a favor?\nCould you like, just fucking sucker punch that dubious elf asshole.\nLike, just drop the fucker?'"},
+            { "type" : "Choice", "options": { 
+				"'Yeah... I'll totally do that.  For real, totally not just saying this to not piss you off...'" : { "action" : "self.setFlag('get_elf_task', True)" }
+				}
+			}
+        ]
+      },
+      "Apprentice" : {
+        "exploreWeight": 1,
+        "nodes" : [
+            { "type" : "Display", "text" : "You run into the apprentice, but they don't have the patience to deal with you."},
+            { "type" : "Choice", "options": { 
+				"what an asshole..." : {}
+				} 
+			},
+			{ "type" : "Done" }
+        ]
+      }
+
+    }
+  }
+}

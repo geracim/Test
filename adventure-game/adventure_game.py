@@ -264,7 +264,13 @@ class sceneLocation:
 		if 'instances' in area:
 			for command in area['instances']:
 				instance_data = area['instances'][command]
-				if 'completionFlag' not in instance_data or instance_data['completionFlag'] not in dynamicData.profile['game_flags']:
+				is_available = True
+				if 'completionFlag' in instance_data and instance_data['completionFlag'] in dynamicData.profile['game_flags']:
+					is_available = False
+				if 'unlockFlag' in instance_data and instance_data['unlockFlag'] not in dynamicData.profile['game_flags']:
+					is_available = False
+				
+				if is_available:
 					if 'canSelectDirectly' in instance_data and instance_data['canSelectDirectly']:
 						user_options[command] = loc.translate(command)
 					if 'exploreWeight' in instance_data and instance_data['exploreWeight'] > 0:

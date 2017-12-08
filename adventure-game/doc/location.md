@@ -24,6 +24,8 @@
 	* zero means this will not show up in the Explore menu
 	* the Explore menu will only appear if at least one non-completed instance in the are has a weight
 	* do not specify a non-zero explore weight to instances with true canSelectDirectly, or it will cause undefined behavior
+* "unlockFlag" (OPTIONAL) - a flag stored in the dynamicData profile / saved game which needs to be set for this instance to show up
+	* if no completionFlag is specified, this instance will be always be available unless it's completed
 * "completionFlag" (OPTIONAL) - a flag stored in the dynamicData profile / saved game indicating this instance is done
 	* if no completionFlag is specified, this instance will be playable an infinite number of times
 	* once the instance calls a MarkCompleted node, this instance will dissapear from locations, or as explore possibilities
@@ -40,6 +42,8 @@
 		* "MarkCompleted" - logs the instance's completion flag to the player profile
 			* This will prevent this instance from being playable again
 			* You may skip over this node, if you only want an instance to be finished under certain conditions
+		* "Done" - ends the instance, skipping all future nodes
+		* "Quit" - shuts down the game
 
 ## Instance Node Choice Functions
   Both the "action" and "condition" options on Choice options will execute short blocks of python.
@@ -62,14 +66,11 @@
 	* Ex `{ "condition" : "self.getTemp(0)" }`
 * self.setFlag( id, value ) & self.getFlag( id ) - similar to above, but manipulates the flags on the user's save game
 	* these are the same flags used by the completionFlag and the travel blocks, so this can be a way for an instance to turn other parts of the game on and off
-	* because the id is a string, you must escape the quotes inside the string block:
-	* Ex `{ "action" : "self.setFlag(\"killedKing\", True)" }`
-	* Ex `{ "condition" : "self.getFlag(\"killedKing\")" }`
+	* Ex `{ "action" : "self.setFlag('killedKing', True)" }`
+	* Ex `{ "condition" : "self.getFlag('killedKing')" }`
 * self.setNumber( id, value ) & self.getNumber( id ) - effect numbers on the player's profile and saved game
-	* because the id is a string, you must escape the quotes inside the string block:
-	* Ex `{ "action" : "self.setNumber(\"beardAwesomness\", 22)" }`
-	* Ex `{ "condition" : "self.getNumber(\"beardAwesomness\") > 10" }`
+	* Ex `{ "action" : "self.setNumber('beardAwesomness', 22)" }`
+	* Ex `{ "condition" : "self.getNumber('beardAwesomness') > 10" }`
 * self.setString( id, value ) & self.getString( id ) - effect strings on the player's profile and saved game
-	* because both the id and value are strings, you must escape the quotes inside the string:
-	* Ex `{ "action" : "self.setString(\"nickName\", \"Biff\")" }`
-	* Ex `{ "condition" : "self.getString(\"nickName\") == \"Biff\"" }`
+	* Ex `{ "action" : "self.setString('nickName', 'Biff')" }`
+	* Ex `{ "condition" : "self.getString('nickName') == 'Biff'" }`
