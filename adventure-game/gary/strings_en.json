@@ -1,4 +1,6 @@
 {
+   "game.menubar.title" : "Gary's RPG",
+
    "scene.save.open" : "Trying to remember our meeting place for next time.",
    "scene.save.success" : "I'll remember this as the last place we met!",
    "scene.save.failure" : "I couldn't find you, adventurer.",

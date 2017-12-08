@@ -1,4 +1,6 @@
 {
+   "game.menubar.title" : "Untitled RPG",
+
    "scene.save.open" : "saving",
    "scene.save.success" : "game saved",
    "scene.save.failure" : "game save error",

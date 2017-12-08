@@ -308,6 +308,7 @@ if __name__ == '__main__':
 		app.loadData('gary')
 
 	# load the default scene as specified in the game config
+	app.wm_title(loc.translate("game.menubar.title"))
 	app.resetSceneStack()
 
 	# start game core
