@@ -18,7 +18,92 @@
         "holy_knight": 1,
         "court_champion": 1
       },
-      "encounter_rate" : 100,
+      "encounter_rate" : 0,
+      "instances" : {
+        "begin arena challenge" : {
+          "canSelectDirectly" : true,
+          "nodes" : [
+            {
+              "type" : "Display",
+              "text" : "The hero's first opponent is Lester, the twisted court jester. \nWith a mocking grin and gimp in his step, he hobbles to the center \nof the arena and makes an exaggerated bow towards the crowd."
+            },
+            {
+              "type" : "Choice",
+              "options" : {
+                "cough cough..." : {}
+              }
+            },
+            {
+              "type" : "Display",
+              "text" : "Lester:\nHuehuehue! Watch, my wonderful tools, as the nameless \nstranger is defeated by your humble fool! \nIn this chance meeting of fate, no power can make my wrath abate! \nFor I, Lester, am a fool unlike the rest. I shall laugh and dance \nas my dagger wobbles in this stranger's pompous chest!"
+            },
+            {
+              "type" : "Choice",
+              "options" : {
+                "silence the fool" : {}
+              }
+            },
+            {
+              "type" : "TriggerEncounter",
+              "encounter" : "court_jester"
+            },
+            {
+              "type" : "Display",
+              "text" : "With little effort and great amusement, \nthe hero defeated Lester, the court jester."
+            },
+            {
+              "type" : "Choice",
+              "options" : {
+                "continue" : {}
+              }
+            },
+            {
+              "type" : "Display",
+              "text" : "As the crowd cheers from above, the guards clear away \nthe twitching corpse of the wretched jester \nand bring in the hero's next opponent: a vile thief."
+            },
+            {
+              "type" : "Choice",
+              "options" : {
+                "fight thief" : {}
+              }
+            },
+            {
+              "type" : "TriggerEncounter",
+              "encounter" : "thief"
+            },
+           {
+              "type" : "Choice",
+              "options" : {
+                "fight disgraced_warrior" : {}
+              }
+            },
+            {
+              "type" : "TriggerEncounter",
+              "encounter" : "disgraced_warrior"
+            },
+           {
+              "type" : "Choice",
+              "options" : {
+                "fight holy_knight" : {}
+              }
+            },
+            {
+              "type" : "TriggerEncounter",
+              "encounter" : "holy_knight"
+            },
+           {
+              "type" : "Choice",
+              "options" : {
+                "fight court_champion" : {}
+              }
+            },
+            {
+              "type" : "TriggerEncounter",
+              "encounter" : "court_champion"
+            }
+          ]
+        }
+      },
       "npc" : [],
       "npc_options" : ["approach", "pickpocket"]       
     },
@@ -30,7 +115,7 @@
         "rat": 1,
         "thief": 1
       },
-      "encounter_rate" : 100,
+      "encounter_rate" : 0,
       "npc" : ["rufous"],
       "npc_options" : ["approach", "pickpocket"]       
     },
@@ -50,7 +135,7 @@
   		"encounter_types" : {
   			"rat": 1
 			},
-  		"encounter_rate" : 20,
+  		"encounter_rate" : 0,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
   	},
@@ -64,7 +149,26 @@
   			"skeleton": 1,
   			"lost_soul": 1
 			},
-  		"encounter_rate" : 45,
+  		"encounter_rate" : 0,
+      "instances" : {
+        "stumble about" : {
+          "canSelectDirectly" : true,
+          "nodes" : [
+            {
+              "type" : "Display",
+              "text" : "The hero is totally lost in the catacombs."
+            }
+          ]
+        },
+        "fight enemy" : {
+          "exploreWeight" : 90,
+          "nodes" : [
+            {
+              "type" : "TriggerEncounter"
+            }
+          ]
+        }
+      },
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
   	},
@@ -76,7 +180,7 @@
   			"necromancer": 1,
   			"wight": 1
 			},
-  		"encounter_rate" : 85,
+  		"encounter_rate" : 0,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
   	},
@@ -87,7 +191,7 @@
   		"encounter_types" : {
   			"rat": 1
       },
-  		"encounter_rate" : 70,
+  		"encounter_rate" : 0,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
   	},
@@ -99,7 +203,7 @@
         "plains_wolf": 1,
   			"grass_snake": 1
 			},
-  		"encounter_rate" : 35,
+  		"encounter_rate" : 0,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
   	},
@@ -110,7 +214,7 @@
   		"encounter_types" : {
   			"ether_wyrm": 1
 			},
-  		"encounter_rate" : 25,
+  		"encounter_rate" : 0,
   		"npc" : ["grand magister albion", "scryer joseph", "scryer lamia", "magister's assistant franklin", "apprentice martin"],
   		"npc_options" : ["approach", "pickpocket"]
   	},
@@ -122,7 +226,7 @@
   			"rat": 1,
   			"drunkard": 1
 			},
-  		"encounter_rate" : 5,
+  		"encounter_rate" : 0,
   		"npc" : [],
   		"npc_options" : ["approach", "pickpocket"]
 	}
