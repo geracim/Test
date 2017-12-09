@@ -13,7 +13,7 @@
       "travel" : {"cambria":""},
       "encounter_types" : {
         "court_jester": 1,
-        "thief": 1,
+        "rogue": 1,
         "disgraced_warrior": 1,
         "holy_knight": 1,
         "court_champion": 1
@@ -35,7 +35,7 @@
             },
             {
               "type" : "Display",
-              "text" : "Lester: \nHuehuehue! \nWatch, my wonderful tools, as the nameless stranger \nis defeated by your humble fool! In this chance meeting \nof fate, no power can make my wrath abate! For I, Lester, \nam a fool unlike the rest. I shall be the first and final test \nand sink my dagger in this stranger's pompous chest! \nTeee heee heee!"
+              "text" : "Lester: \n'Huehuehue! \nWatch, my wonderful tools, as the nameless stranger \nis defeated by your humble fool! In this chance meeting \nof fate, no power can make my wrath abate! For I, Lester, \nam a fool unlike the rest. I shall be the first and final test \nand sink my knife in this stranger's pompous chest! \nTeee heee heee!'"
             },
             {
               "type" : "Choice",
@@ -49,29 +49,46 @@
             },
             {
               "type" : "Display",
-              "text" : "With little effort and great amusement, \nthe hero defeated Lester, the court jester."
+              "text" : "With little effort and great satisfaction, \nthe hero defeated Lester, the court jester."
             },
             {
               "type" : "Choice",
               "options" : {
-                "continue" : {}
+                "bask in your triumph" : {}
               }
             },
             {
               "type" : "Display",
-              "text" : "As the crowd cheers from above, the guards clear away \nthe twitching corpse of the wretched jester \nand bring in the hero's next opponent: a vile thief."
+              "text" : "As the crowd cheers from above, the guards \nclear away the corpse of the wretched jester."
             },
             {
               "type" : "Choice",
               "options" : {
-                "fight thief" : {}
+                "watch him cautiously" : {}
               }
             },
             {
-              "type" : "TriggerEncounter",
-              "encounter" : "thief"
+              "type" : "Display",
+              "text" : "The rogue walks up to within a dagger's thrust \nof the hero and appears to size up his foe."
             },
-           {
+            {
+              "type" : "Choice",
+              "options" : {
+                "stare him down" : {},
+                "stab stab" : {
+                  "skip" : 2
+                }
+              }
+            },
+            {
+              "type" : "Display",
+              "text" : "Rogue: \n'So you think you're quite tough, do you? \n"
+            },
+            {
+              "type" : "TriggerEncounter",
+              "encounter" : "rogue"
+            },
+            {
               "type" : "Choice",
               "options" : {
                 "fight disgraced_warrior" : {}
@@ -81,7 +98,7 @@
               "type" : "TriggerEncounter",
               "encounter" : "disgraced_warrior"
             },
-           {
+            {
               "type" : "Choice",
               "options" : {
                 "fight holy_knight" : {}
@@ -91,7 +108,7 @@
               "type" : "TriggerEncounter",
               "encounter" : "holy_knight"
             },
-           {
+            {
               "type" : "Choice",
               "options" : {
                 "fight court_champion" : {}
@@ -113,7 +130,7 @@
       "travel" : {},
       "encounter_types" : {
         "rat": 1,
-        "thief": 1
+        "rogue": 1
       },
       "encounter_rate" : 0,
       "npc" : ["rufous"],
