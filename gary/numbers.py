@@ -1,6 +1,16 @@
+#!/usr/bin/env python3
+
 import random
+import os
+
+def clear():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def game():
+	clear()
 	secret_num = random.randint(1, 10)
 	guesses = []
 
@@ -22,9 +32,13 @@ def game():
 			print("You have {} guesses left".format(5-len(guesses)))
 	else:
 		print("You didn't get it... My number was {}.".format(secret_num))
+
 	play_again = input("Do you want to play again? Y/n: ")
+
 	if play_again.lower() != 'n':
 		game()
 	else:
-		print("Bye!")
+		clear()
+		print("\n\nBye!\n\n")
+
 game()
