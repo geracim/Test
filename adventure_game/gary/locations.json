@@ -75,14 +75,20 @@
               "type" : "Choice",
               "options" : {
                 "stare him down" : {},
-                "stab stab" : {
+                "charge the rogue" : {
                   "skip" : 2
                 }
               }
             },
             {
               "type" : "Display",
-              "text" : "Rogue: \n'So you think you're quite tough, do you? \n"
+              "text" : "Rogue: \n'So you think you're quite tough, do you? \nLet's see how smug you look while choking on your own blood."
+            },
+            {
+              "type" : "Choice",
+              "options" : {
+                "battle stance" : {},
+              }
             },
             {
               "type" : "TriggerEncounter",

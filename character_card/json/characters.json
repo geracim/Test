@@ -1,0 +1,12 @@
+{
+	"Jubei" : {
+		"class" : "samurai",
+		"weapon" : ["light melee", "heavy melee", "thrown"],
+		"gear_type" : ["leather", "mail"]
+	},
+
+	"Hazashi" : {
+		"class" : "ninja",
+		"weapon" : ["light", "thrown", "hand"]
+	}
+}

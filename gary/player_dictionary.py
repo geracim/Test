@@ -8,6 +8,13 @@ def clear():
     else:
         os.system('clear')
 
-player = {"name": "Gary", "remaining_lives": 3}
+def player_card():
+    player = {
+    "pName": "Jubei", 
+    "pClass": "samurai", 
+    "pLevel" : "1"
+    }
+
 
 clear()
+player_card()
