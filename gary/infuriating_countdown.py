@@ -17,13 +17,13 @@ class vars:
 def run():
 	while vars.play == True:
 		clear()
-		random_num = random.randint(1, 50)
+		random_num = random.randint(1, 100)
 		print("Run number: {}\n________".format(vars.n))
-		if random_num > 10:
+		if random_num > 5:
 			vars.t = 0
 			for vars.t in range(1,random_num):
-				print(random_num-vars.t)
-				time.sleep(0.25)
+				print(str(random_num-vars.t) + ": " + (random_num-vars.t)*"*")
+				time.sleep(0.13)
 				vars.t += 1
 		else:
 			print("quit on {} after {} runs.".format(random_num,vars.n))
