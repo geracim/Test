@@ -20,13 +20,13 @@ class bools:
     plague_bool = False
 
 class constants:
-	earthquake_constant = 2
+	earthquake_chance = 0.01
 	earthquake_dmg = 0
-	fire_constant = 8
+	fire_chance = 0.04
 	fire_dmg = 0
-	flood_constant = 6
+	flood_chance = 0.02
 	flood_dmg = 0
-	plague_constant = .01
+	plague_chance = 0.4
 	plague_dmg = 0
 
 class rolls:
@@ -49,7 +49,7 @@ def epoch():
 def earthquake():
 	rolls.earthquake_roll = random.randint(1,100)
 
-	if rolls.earthquake_roll > constants.earthquake_constant:
+	if rolls.earthquake_roll > (100*(constants.earthquake_chance)):
 		bools.earthquake_bool = True
 	else:
 		bools.earthquake_bool = False
@@ -57,7 +57,7 @@ def earthquake():
 def fire():
 	rolls.fire_roll = random.randint(1,100)
 
-	if rolls.fire_roll > constants.fire_constant:
+	if rolls.fire_roll > (100*(constants.fire_chance)):
 		bools.fire_bool = True
 	else:
 		bools.fire_bool = False
@@ -65,15 +65,15 @@ def fire():
 def flood():
 	rolls.flood_roll = random.randint(1,100)
 
-	if rolls.flood_roll > constants.flood_constant:
+	if rolls.flood_roll > (100*(constants.flood_chance)):
 		bools.flood_bool = True
 	else:
 		bools.flood_bool = False
 
 def plague():
-	rolls.plague_roll = random.randint(1,100)
+	rolls.plague_roll = random.randint(1,(100*(constants.plague_chance)))
 
-	if rolls.plague_roll > constants.plague_constant:
+	if rolls.plague_roll > constants.plague_chance:
 		bools.plague_bool = True
 	else:
 		bools.plague_bool = False
@@ -86,12 +86,12 @@ def dmg_roll():
 	constants.fire_dmg = random.randint(1, 100)
 	constants.flood_dmg = random.randint(15, 50)
 	constants.plague_dmg = random.randint(1, counters.current_pop)
-	
 
 def run():
 	earthquake()
 	fire()
 	flood()
+	plague()
 	new_pop()
 	dmg_roll()
 
@@ -103,18 +103,18 @@ def run():
 
 # ================================================
 	print("\n=======================================")
-	print("current century: " + str(counters.epoch_counter + 1))
-	print("epoch length: " + str(rolls.epoch_roll))
-	print("current population: " + str(counters.current_pop))
+	print("current century: {}".format(counters.epoch_counter + 1))
+	print("epoch length: {}".format(rolls.epoch_roll))
+	print("current population: {}".format(counters.current_pop))
 	if counters.epoch_counter > 0:
-		print("new citizens: " + str(rolls.pop_gain))
+		print("new citizens: {}".format(rolls.pop_gain))
 		counters.current_pop += rolls.pop_gain
 #///// DEBUG ////////////
 #	print("-----------------------\n")
-#	print("earthquake roll: " + str(rolls.earthquake_roll) + "/" + str(constants.earthquake_constant))
-#	print("fire roll: " + str(rolls.fire_roll) + "/" + str(constants.fire_constant))
-#	print("flood roll: " + str(rolls.flood_roll) + "/" + str(constants.flood_constant))
-#	print("plague roll: " + str(rolls.plague_roll) + "/" + str(constants.plague_constant))
+#	print("earthquake roll: " + str(rolls.earthquake_roll) + "/" + str(constants.earthquake_chance))
+#	print("fire roll: " + str(rolls.fire_roll) + "/" + str(constants.fire_chance))
+#	print("flood roll: " + str(rolls.flood_roll) + "/" + str(constants.flood_chance))
+#	print("plague roll: " + str(rolls.plague_roll) + "/" + str(constants.plague_chance))
 #///// DEBUG ////////////
 	print("=======================================\n")
 # ================================================
@@ -154,6 +154,8 @@ def run():
 	else:
 		print("Plague: No casualties.\n")
 # ================================================
+
+	print("Total: {} casualties.".format(constants.earthquake_dmg + constants.fire_dmg + constants.flood_dmg + constants.plague_dmg))
 
 def play():
 	epoch()
