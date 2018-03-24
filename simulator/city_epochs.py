@@ -18,6 +18,7 @@ class bools:
     fire_bool = False
     flood_bool = False
     plague_bool = False
+    manual_bool = False
 
 class constants:
 	earthquake_chance = 0.01
@@ -30,12 +31,15 @@ class constants:
 	plague_dmg = 0
 
 class rolls:
-	epoch_roll: 0
+	epoch_roll: 100
 	pop_gain: 0
 	earthquake_roll: 0
 	fire_roll: 0
 	flood_roll: 0
 	plague_roll: 0
+
+class choice:
+	choice_manual = ""
 
 def clear():
     if os.name == 'nt':
@@ -85,20 +89,14 @@ def dmg_roll():
 	constants.earthquake_dmg = random.randint(10, 80)
 	constants.fire_dmg = random.randint(1, 100)
 	constants.flood_dmg = random.randint(15, 50)
-	constants.plague_dmg = random.randint(1, counters.current_pop)
+	constants.plague_dmg = random.randint(1, 150)
 
 def run():
-	earthquake()
-	fire()
-	flood()
-	plague()
-	new_pop()
-	dmg_roll()
 
 	t = 0
 	for t in range(0,5):
 		print(".")
-		time.sleep(0.8)
+		time.sleep(0.2)
 		t += 1
 
 # ================================================
@@ -159,10 +157,34 @@ def run():
 
 def play():
 	epoch()
+	choice.manual = input("(M)anual or (A)uto?\n> ").lower()
+	if choice.manual == "m" or choice.manual == "manual":
+		counters.current_pop = int(input("Enter a starting population.\n> "))
+		rolls.epoch_roll = int(input("Enter an epoch length in centuries.\n> "))
 
-	while counters.current_pop > 0 and counters.epoch_counter < rolls.epoch_roll:
-		run()
-		counters.epoch_counter += 1
+		while counters.current_pop > 0 and counters.epoch_counter < rolls.epoch_roll:
+			earthquake()
+			fire()
+			flood()
+			plague()
+			new_pop()
+			dmg_roll()	
+
+			run()
+			counters.epoch_counter += 1
+
+	elif choice.manual == "a" or choice.manual == "auto":		
+		
+		while counters.current_pop > 0 and counters.epoch_counter < rolls.epoch_roll:
+			earthquake()
+			fire()
+			flood()
+			plague()
+			new_pop()
+			dmg_roll()	
+
+			run()
+			counters.epoch_counter += 1
 
 	if counters.epoch_counter > 1:
 		print("The City survived for {} centuries.".format(counters.epoch_counter))
@@ -170,6 +192,9 @@ def play():
 		print("The City survived for {} century.".format(counters.epoch_counter))
 	else:
 		print("Epic Fail.")
+
+
+
 
 clear()
 play()
