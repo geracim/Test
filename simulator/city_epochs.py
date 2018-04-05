@@ -89,14 +89,14 @@ def dmg_roll():
 	constants.earthquake_dmg = random.randint(10, 80)
 	constants.fire_dmg = random.randint(1, 100)
 	constants.flood_dmg = random.randint(15, 50)
-	constants.plague_dmg = random.randint(1, 150)
+	constants.plague_dmg = random.randint(counters.current_pop, 150)
 
 def run():
 
 	t = 0
 	for t in range(0,5):
 		print(".")
-		time.sleep(0.2)
+		time.sleep(0.6)
 		t += 1
 
 # ================================================
@@ -157,10 +157,11 @@ def run():
 
 def play():
 	epoch()
+	print("Welcome to the City simulator. This tool is intended \nas a fun & simple test of 'Minimum viable population'. \nEnter a starting population, a number of ticks in centuries (Epoch), \nand see if your City survives.\n")
 	choice.manual = input("(M)anual or (A)uto?\n> ").lower()
 	if choice.manual == "m" or choice.manual == "manual":
-		counters.current_pop = int(input("Enter a starting population.\n> "))
-		rolls.epoch_roll = int(input("Enter an epoch length in centuries.\n> "))
+		counters.current_pop = int(input("Enter a starting population. (Minimum viable population)\n> "))
+		rolls.epoch_roll = int(input("Enter an epoch length in centuries. (number of ticks)\n> "))
 
 		while counters.current_pop > 0 and counters.epoch_counter < rolls.epoch_roll:
 			earthquake()
