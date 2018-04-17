@@ -89,7 +89,7 @@ def dmg_roll():
 	constants.earthquake_dmg = random.randint(10, 80)
 	constants.fire_dmg = random.randint(1, 100)
 	constants.flood_dmg = random.randint(15, 50)
-	constants.plague_dmg = random.randint(counters.current_pop, 150)
+	constants.plague_dmg = random.randint(1, 100)
 
 def run():
 
