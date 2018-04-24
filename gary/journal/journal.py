@@ -67,21 +67,38 @@ def menu():
     print("-----------------")
     input_vars.menu_input = input("Type 'n' to begin a new entry.\nType 's' to save.\nType 'l' to load.\nType 'q' to quit.\n>> ").lower()
 
-    # if input_vars.menu_input == "n":
-    #     blah
-    # elif input_vars.menu_input == "s"
-    #     blah
+    if input_vars.menu_input == "n":
+        print("new")
+        
+    elif input_vars.menu_input == "s":
+        print("save")
+        
+    elif input_vars.menu_input == "l":
+        print("load")
+        
+    elif input_vars.menu_input == "q":
+        print("quit")
+        bools.journal = False
+
+    else:
+        print("error")
+        bools.journal = False
+
     prompts()
 
 def prompts():
-    bools.journal = False
+    print("prompts")
+    menu()
 
 def ux():
     if bools.show_menu == True:
         print("Welcome to your journal.")
+        print(str(datetime.now())[:-7])
         menu()
         bools.show_menu = False
+
     else:
+        print(str(datetime.now())[:-7])
         prompts()
 
 #################################################################################
@@ -90,7 +107,6 @@ def ux():
 
 while bools.journal == True:
     clear()
-    print(str(datetime.now())[:-7])
     ux()
 
 
