@@ -1,0 +1,139 @@
+07-10 16:17:56.375  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 71:76:1C:D1:BB:E5 name: Vector C5Y8
+07-10 16:17:56.463  4257  4279 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.ConnectToPeripheral - PeripheralId: 55:66:78:D8:AA:40
+07-10 16:18:01.478  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnConnectedPeripheral - peripheral: 55:66:78:D8:AA:40
+07-10 16:18:01.481  4257  4282 I mono-stdout: DAS[Debug]: core.Services.Network.MessagingNetworkService.OnBleConnectedToPeripheral - Attempt To Discover Service: victor_communication
+07-10 16:18:01.486  4257  4282 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnConnectedToNetworkPeer - 55:66:78:D8:AA:40
+07-10 16:18:01.542  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.StopScanForPeripherals -
+07-10 16:18:01.565  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnConnectedPeripheral - newState: Connected
+07-10 16:18:02.891  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheralService - peripheral: 55:66:78:D8:AA:40 service: 0000FEE3-0000-1000-8000-00805F9B34FB
+07-10 16:18:02.895  4257  4282 I mono-stdout: DAS[Debug]: core.Services.Network.MessagingNetworkService.OnBleDiscoveredPeripheralService - Attempt To Discover Characteristic: 30619F2D-0F54-41BD-A65A-7588D8C85B45 for service: victor_communication
+07-10 16:18:02.895  4257  4282 I mono-stdout: DAS[Debug]: core.Services.Network.MessagingNetworkService.OnBleDiscoveredPeripheralService - Attempt To Discover Characteristic: 7D2A4BDA-D29B-4152-B725-2491478C5CD7 for service: victor_communication
+07-10 16:18:02.903  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheralCharacteristic - peripheral: 55:66:78:D8:AA:40 service: 0000FEE3-0000-1000-8000-00805F9B34FB characteristic: 30619F2D-0F54-41BD-A65A-7588D8C85B45
+07-10 16:18:02.911  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheralCharacteristic - peripheral: 55:66:78:D8:AA:40 service: 0000FEE3-0000-1000-8000-00805F9B34FB characteristic: 7D2A4BDA-D29B-4152-B725-2491478C5CD7
+07-10 16:18:02.932  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDescriptorWrite - status: Success
+07-10 16:18:02.935  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: C5-01-02-00-00-00
+07-10 16:18:02.942  4257  4270 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageHandshake - version: 2
+07-10 16:18:02.943  4257  4270 I mono-stdout: DAS[Debug]: core.Services.AppInfo.AppInfoService.AppAuthVersion - Setting AppAuthVersion to 2
+07-10 16:18:02.943  4257  4270 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageHandshake - 2
+07-10 16:18:02.954  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : C5-01-02-00-00-00
+07-10 16:18:02.955  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:03.075  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-04-02-01-78-08-46-C9-C7-E5-E3-B5-5D-61-06-C7-C8-CF-66-5E
+07-10 16:18:03.077  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 50-D9-4C-E5-CF-F6-78-1B-6C-48-0A-01-41-A2-1F-FA-0D
+07-10 16:18:03.087  4257  4271 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnNetworkPeerReceivedData2 - tags: RtsConnection : RtsConnRequest
+07-10 16:18:03.088  4257  4271 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageRtsConnRequest -
+07-10 16:18:03.089  4257  4271 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.SendRobotConnectionResponse - Reconnection
+07-10 16:18:03.090  4257  4271 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageRtsConnectionResponse - Reconnection
+07-10 16:18:03.106  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 93-04-02-02-01-1F-8C-F9-C2-5C-87-19-F0-7C-96-35-77-AC-C9-0E
+07-10 16:18:03.106  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:03.109  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 51-C3-DC-FC-08-35-41-81-1A-9B-B9-ED-B2-05-91-47-00-7F
+07-10 16:18:03.109  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:03.222  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-04-02-03-74-2B-06-CF-BA-3B-EB-EF-42-8A-F9-63-4D-9A-62-22
+07-10 16:18:03.223  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 13-E2-B5-4E-EA-18-FA-7A-59-E1-E5-A2-FD-E6-77-7F-46-A4-CD-B4
+07-10 16:18:03.224  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 4D-7B-63-E5-AB-0B-75-49-4D-D9-86-14-F0-61
+07-10 16:18:03.226  4257  4270 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnNetworkPeerReceivedData2 - tags: RtsConnection : RtsNonceMessage
+07-10 16:18:03.227  4257  4270 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageRtsNonce -
+07-10 16:18:03.251  4257  4389 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.SendRobotCryptoChallengeStartAck -
+07-10 16:18:03.252  4257  4389 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageAck -
+07-10 16:18:03.257  4257  4389 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : C4-04-02-12-03
+07-10 16:18:03.257  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:03.320  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-2F-21-31-C8-52-B2-70-36-40-B9-EC-30-42-47-6F-6F-09-2E-A5
+07-10 16:18:03.321  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 44-94-A8-FD-B4
+07-10 16:18:03.326  4257  4271 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnNetworkPeerReceivedData2 - tags: RtsConnection : RtsChallengeMessage
+07-10 16:18:03.327  4257  4271 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageRtsChallenge - 742096347
+07-10 16:18:03.329  4257  4271 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageCryptoChallenge - 742096348
+07-10 16:18:03.342  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 93-3A-A5-41-67-7E-FB-57-D6-07-5C-2A-B7-70-68-C0-85-E3-E3-28
+07-10 16:18:03.342  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:03.344  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 44-BE-9D-97-92
+07-10 16:18:03.344  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:03.417  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: D3-13-1A-16-4D-7A-25-37-DD-53-A8-73-AA-CA-79-4B-56-B3-BC-24
+07-10 16:18:03.419  4257  4271 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnNetworkPeerReceivedData2 - tags: RtsConnection : RtsChallengeSuccessMessage
+07-10 16:18:03.421  4257  4271 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageRtsChallengeSuccess -
+07-10 16:18:03.558  4257  4279 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.SendRobotRtsStatusRequest -
+07-10 16:18:03.559  4257  4279 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageRtsStatusRequest -
+07-10 16:18:03.566  4257  4279 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : D3-83-B8-67-D9-D9-CE-55-D9-8D-90-5B-BA-9F-42-C5-0D-12-54-DA
+07-10 16:18:03.566  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:03.764  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-92-8A-04-86-C3-1C-7A-2E-E6-D4-7E-EA-06-57-CC-B7-6C-99-E2
+07-10 16:18:03.769  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 13-E1-A9-DB-88-8E-61-57-4D-3C-8E-C2-74-8F-6A-11-60-DC-1B-8F
+07-10 16:18:03.775  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 13-90-27-98-0E-87-0C-CA-D7-EC-3F-76-F5-04-D5-77-12-A4-F6-4E
+07-10 16:18:03.779  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 4C-BF-8F-73-C2-5D-E6-66-58-FD-4C-24-FA
+07-10 16:18:03.792  4257  4270 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnNetworkPeerReceivedData2 - tags: RtsConnection : RtsStatusResponse_2
+07-10 16:18:03.798  4257  4270 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageRtsStatusResponse -
+07-10 16:18:03.886  4257  4277 I mono-stdout: DAS[Warn]: RobotCommunicationConnectionModule.AttemptAutoConnectToRobot - Failed! Reason: RobotNotUpdated Exception: System.Exception: Robot needs to be OTA'd
+07-10 16:18:03.897  4257  4277 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.DisconnectFromPeripheral - PeripheralId: 55:66:78:D8:AA:40
+07-10 16:18:03.909  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDisconnectedPeripheral - peripheral: 55:66:78:D8:AA:40
+07-10 16:18:03.910  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnConnectedPeripheral - newState: Disconnected
+07-10 16:18:04.026  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.OnStateExit - [ScanConnectLogout]
+07-10 16:18:04.036  4257  4257 I mono-stdout: DAS[Debug]: [Mvx.Diagnostic] -  12.75 Activity host with ViewModelType chewie.Features.ConnectionFlow.ViewModels.ConnectionRootViewModel is not CurrentTopActivity. Showing Activity before showing Fragment for chewie.Features.ConnectionFlow.ViewModels.ScanConnectLogoutViewModel
+07-10 16:18:04.076  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.OnStateEnter - [ScanConnectLogout]
+07-10 16:18:04.112  4257  4257 I mono-stdout: DAS[Debug]: [Mvx.Diagnostic] -  12.82 Attempting to load new ViewModel from Intent with Extras
+07-10 16:18:04.207  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.StartScanForPeripherals - Service UUID: 0000FEE3-0000-1000-8000-00805F9B34FB
+07-10 16:18:04.403  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 71:53:2B:47:DD:F5 name: Vector W7T8
+07-10 16:18:04.415  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 6D:B5:F3:15:C7:47 name: Vector N8X3
+07-10 16:18:04.437  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 6C:68:C3:F6:6C:F4 name: Vector H7C8
+07-10 16:18:04.605  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 4F:C2:D9:3A:4C:38 name: Vector H2X2
+07-10 16:18:04.620  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 5C:F4:8A:7D:CF:EC name: Vector U7H3
+07-10 16:18:04.895  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 76:2F:7C:27:01:2C name: Vector F2G8
+07-10 16:18:05.159  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 47:9D:60:2E:2F:4B name: Vector U2A1
+07-10 16:18:05.532  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 51:52:65:CD:42:C2 name: Vector T1U6
+07-10 16:18:06.389  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 5F:44:73:A2:55:CC name: Vector S2G8
+07-10 16:18:06.402  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 4B:6A:D5:A5:7A:10 name: Vector P3W6
+07-10 16:18:06.547  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 5D:F2:7E:4D:25:1D name: Vector W5Z2
+07-10 16:18:06.601  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 62:86:62:AA:16:23 name: Vector N2G3
+07-10 16:18:06.633  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 71:76:1C:D1:BB:E5 name: Vector C5Y8
+07-10 16:18:06.817  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 55:66:78:D8:AA:40 name: Vector D4P1
+07-10 16:18:07.087  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 6E:74:F4:8B:B9:F7 name: Vector U2X6
+07-10 16:18:08.059  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheral - new peripheral: 74:7C:83:70:B7:91 name: Vector C4C9
+07-10 16:18:11.299  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.HandleContinue -
+07-10 16:18:11.301  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.OnStateExit - [ScanConnectLogout]
+07-10 16:18:11.309  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.OnStateEnter - [ConnectToBluetooth]
+07-10 16:18:16.268  4257  4257 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.ConnectToPeripheral - PeripheralId: 55:66:78:D8:AA:40
+07-10 16:18:21.503  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnConnectedPeripheral - peripheral: 55:66:78:D8:AA:40
+07-10 16:18:21.505  4257  4270 I mono-stdout: DAS[Debug]: core.Services.Network.MessagingNetworkService.OnBleConnectedToPeripheral - Attempt To Discover Service: victor_communication
+07-10 16:18:21.509  4257  4270 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnConnectedToNetworkPeer - 55:66:78:D8:AA:40
+07-10 16:18:21.519  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.StopScanForPeripherals -
+07-10 16:18:21.563  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnConnectedPeripheral - newState: Connected
+07-10 16:18:22.970  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheralService - peripheral: 55:66:78:D8:AA:40 service: 0000FEE3-0000-1000-8000-00805F9B34FB
+07-10 16:18:22.972  4257  4604 I mono-stdout: DAS[Debug]: core.Services.Network.MessagingNetworkService.OnBleDiscoveredPeripheralService - Attempt To Discover Characteristic: 30619F2D-0F54-41BD-A65A-7588D8C85B45 for service: victor_communication
+07-10 16:18:22.972  4257  4604 I mono-stdout: DAS[Debug]: core.Services.Network.MessagingNetworkService.OnBleDiscoveredPeripheralService - Attempt To Discover Characteristic: 7D2A4BDA-D29B-4152-B725-2491478C5CD7 for service: victor_communication
+07-10 16:18:22.978  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheralCharacteristic - peripheral: 55:66:78:D8:AA:40 service: 0000FEE3-0000-1000-8000-00805F9B34FB characteristic: 30619F2D-0F54-41BD-A65A-7588D8C85B45
+07-10 16:18:22.996  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDiscoveredPeripheralCharacteristic - peripheral: 55:66:78:D8:AA:40 service: 0000FEE3-0000-1000-8000-00805F9B34FB characteristic: 7D2A4BDA-D29B-4152-B725-2491478C5CD7
+07-10 16:18:23.073  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: C5-01-02-00-00-00
+07-10 16:18:23.077  4257  4282 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageHandshake - version: 2
+07-10 16:18:23.077  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnConnectedPeripheral - peripheral: 55:66:78:D8:AA:40
+07-10 16:18:23.078  4257  4282 I mono-stdout: DAS[Debug]: core.Services.AppInfo.AppInfoService.AppAuthVersion - Setting AppAuthVersion to 2
+07-10 16:18:23.078  4257  4282 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageHandshake - 2
+07-10 16:18:23.079  4257  4270 I mono-stdout: DAS[Debug]: core.Services.Network.MessagingNetworkService.OnBleConnectedToPeripheral - Attempt To Discover Service: victor_communication
+07-10 16:18:23.086  4257  4270 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnConnectedToNetworkPeer - 55:66:78:D8:AA:40
+07-10 16:18:23.096  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : C5-01-02-00-00-00
+07-10 16:18:23.098  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnDescriptorWrite - status: Success
+07-10 16:18:23.100  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.HandleContinue -
+07-10 16:18:23.100  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnConnectedPeripheral - newState: Connected
+07-10 16:18:23.100  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.OnStateExit - [ConnectToBluetooth]
+07-10 16:18:23.106  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:23.117  4257  4257 I mono-stdout: DAS[Debug]: ConnectionFlowModel.OnStateEnter - [ConnectToPeripheral]
+07-10 16:18:23.210  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-04-02-01-78-08-46-C9-C7-E5-E3-B5-5D-61-06-C7-C8-CF-66-5E
+07-10 16:18:23.211  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-04-02-01-78-08-46-C9-C7-E5-E3-B5-5D-61-06-C7-C8-CF-66-5E
+07-10 16:18:23.213  4257  4270 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 50-D9-4C-E5-CF-F6-78-1B-6C-48-0A-01-41-A2-1F-FA-0D
+07-10 16:18:23.213  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 50-D9-4C-E5-CF-F6-78-1B-6C-48-0A-01-41-A2-1F-FA-0D
+07-10 16:18:23.213  4257  4282 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnNetworkPeerReceivedData2 - tags: RtsConnection : RtsConnRequest
+07-10 16:18:23.213  4257  4282 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageRtsConnRequest -
+07-10 16:18:23.213  4257  4282 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.SendRobotConnectionResponse - FirstTimePair
+07-10 16:18:23.213  4257  4282 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageRtsConnectionResponse - FirstTimePair
+07-10 16:18:23.214  4257  4270 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.OnNetworkPeerReceivedData2 - tags: RtsConnection : RtsConnRequest
+07-10 16:18:23.214  4257  4270 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.OnReceivedRobotMessageRtsConnRequest -
+07-10 16:18:23.214  4257  4270 I mono-stdout: DAS[Debug]: RobotCommunicationMessagingModule.SendRobotConnectionResponse - FirstTimePair
+07-10 16:18:23.214  4257  4270 I mono-stdout: DAS[Debug]: vectorSDK.InternalAPI.SendMessageRtsConnectionResponse - FirstTimePair
+07-10 16:18:23.218  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 93-04-02-02-00-1F-8C-F9-C2-5C-87-19-F0-7C-96-35-77-AC-C9-0E
+07-10 16:18:23.219  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:23.220  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 93-04-02-02-00-1F-8C-F9-C2-5C-87-19-F0-7C-96-35-77-AC-C9-0E
+07-10 16:18:23.220  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:23.222  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 51-C3-DC-FC-08-35-41-81-1A-9B-B9-ED-B2-05-91-47-00-7F
+07-10 16:18:23.223  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:23.224  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.WriteCharacteristicFromQueue - True : 51-C3-DC-FC-08-35-41-81-1A-9B-B9-ED-B2-05-91-47-00-7F
+07-10 16:18:23.226  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnCharacteristicWrite - status: Success
+07-10 16:18:23.703  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-04-02-03-14-4B-A4-E8-33-B3-9A-BB-36-00-5A-21-83-9A-91-30
+07-10 16:18:23.704  4257  4271 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 93-04-02-03-14-4B-A4-E8-33-B3-9A-BB-36-00-5A-21-83-9A-91-30
+07-10 16:18:23.708  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 13-E1-C1-BE-47-95-3E-0A-68-AB-CB-83-AC-DC-0C-CF-61-B3-15-75
+07-10 16:18:23.709  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 13-E1-C1-BE-47-95-3E-0A-68-AB-CB-83-AC-DC-0C-CF-61-B3-15-75
+07-10 16:18:23.712  4257  4282 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 4D-49-FB-BF-64-3D-DF-70-41-61-0D-64-C3-07
+07-10 16:18:23.713  4257  4604 I mono-stdout: DAS[Debug]: core.Droid.Services.Ble.BleService.OnUpdatedCharacterteristicValue - peripheral: 55:66:78:D8:AA:40 characteristic: 30619f2d-0f54-41bd-a65a-7588d8c85b45 value: 4D-49-FB-BF-64-3D-DF-70-41-61-0D-64-C3-07
