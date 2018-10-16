@@ -98,6 +98,9 @@ def selector():
         sprinkleStatus()
     elif states.tierSelect == "q":
         states.power = "off"
+        states.runTier1 = False
+        states.runTier2 = False
+        states.runTier3 = False
     else:
         print("wtf? how'd i get here?!")
 
