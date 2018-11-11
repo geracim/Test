@@ -1,0 +1,26 @@
+worldObject {
+	rock(model=value,shader=value)
+	archer(model=value,shader=value,health=range(0,50),inventory={value})
+	arrow(model=value,shader=value)
+}
+
+sim.ref(worldObject)
+
+sim.new(rock) rock1(smallRock,mountainShader).location(0,0)
+
+sim.new(rock) rock2(smallRock,beachShader).location(1,0)
+
+sim.new(archer) archer1(mediumArcher,elfArcherShader,120,{null}).location(3,0)
+
+sim.print.rock1.location
+
+
+sim.edit(archer1) self.health=+5 iterate time(1)
+
+sim.new(arrow) arrow1(woodArrow,woodshader).location(4,0)
+
+when sim.archer1.location == sim.arrow1.location
+	sim.edit(archer1) self.inventory =+ arrow1
+	sim.remove(arrow1)
+
+sim.run
